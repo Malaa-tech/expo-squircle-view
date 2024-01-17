@@ -1,5 +1,4 @@
 import android.graphics.Path
-import android.util.Log
 import androidx.core.graphics.PathParser
 import expo.modules.squircleview.CurveProperties
 import kotlin.math.cos
@@ -13,18 +12,33 @@ class SquirclePath(
     private var height: Float,
     private var borderRadius: Float,
     private var cornerSmoothing: Float
-): Path() {
+) : Path() {
 
     init {
-        val curvedProperties = calculateCurveProperties(this.borderRadius, this.cornerSmoothing, false, min(this.width, this.height) / 2);
+        val curvedProperties = calculateCurveProperties(
+            this.borderRadius,
+            this.cornerSmoothing,
+            false,
+            min(this.width, this.height) / 2
+        );
         val path =
-            PathParser.createPathFromPathData(getSVGPathFromPathParams(this.width, this.height, curvedProperties))
+            PathParser.createPathFromPathData(
+                getSVGPathFromPathParams(
+                    this.width,
+                    this.height,
+                    curvedProperties
+                )
+            )
 
         this.addPath(path)
     }
 
 
-    private fun getSVGPathFromPathParams(width: Float, height: Float, curveProperties: CurveProperties): String {
+    private fun getSVGPathFromPathParams(
+        width: Float,
+        height: Float,
+        curveProperties: CurveProperties
+    ): String {
         return """
                 M ${width - curveProperties.p} 0 
                 ${getTopRightPath(curveProperties)} 
@@ -45,7 +59,6 @@ class SquirclePath(
             c ${curveProperties.c} ${-curveProperties.d} ${curveProperties.b + curveProperties.c} ${-curveProperties.d} ${curveProperties.a + curveProperties.b + curveProperties.c} ${-curveProperties.d}
         """.trimIndent()
         }
-
         return ""
     }
 
@@ -57,7 +70,6 @@ class SquirclePath(
             c ${-curveProperties.d} ${-curveProperties.c} ${-curveProperties.d} ${-(curveProperties.b + curveProperties.c)} ${-curveProperties.d} ${-(curveProperties.a + curveProperties.b + curveProperties.c)}
         """.trimIndent()
         }
-
         return ""
     }
 
@@ -69,7 +81,6 @@ class SquirclePath(
             c ${-curveProperties.c} ${curveProperties.d} ${-(curveProperties.b + curveProperties.c)} ${curveProperties.d} ${-(curveProperties.a + curveProperties.b + curveProperties.c)} ${curveProperties.d}
         """.trimIndent()
         }
-
         return ""
     }
 
@@ -81,7 +92,6 @@ class SquirclePath(
             c ${curveProperties.d} ${curveProperties.c} ${curveProperties.d} ${curveProperties.c + curveProperties.d} ${curveProperties.d} ${curveProperties.a + curveProperties.b + curveProperties.c}
         """.trimIndent()
         }
-
         return ""
     }
 

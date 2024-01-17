@@ -35,8 +35,6 @@ export default function App() {
         onPress={() => {}}
       >
         <ExpoSquircleView.ExpoSquircleView
-          name="test"
-          // pink
           backgroundColor={"#FFC0CB"}
           borderWidth={3}
           borderColor={"blue"}

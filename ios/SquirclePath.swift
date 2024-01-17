@@ -1,6 +1,6 @@
 //
-//  SquircleView.swift
-//  ReactNativeSquircleView
+//  SquirclePath.swift
+//  ExpoSquircleView
 //
 //  Created by Wadah Esam on 18/01/2024.
 //
@@ -8,24 +8,28 @@
 import Foundation
 import PocketSVG
 
-struct SquirclePath {
+struct CurveProperties {
+    var a: CGFloat
+    var b: CGFloat
+    var c: CGFloat
+    var d: CGFloat
+    var p: CGFloat
+    var arcSectionLength: CGFloat
+    var cornerRadius: CGFloat
+}
 
+struct SquirclePath {
+    
     static func create(width: CGFloat, height: CGFloat, radius: CGFloat, cornerSmoothing: CGFloat) -> CGPath {
-        
         let curveProperties = calculateCurveProperties(cornerRadius: radius, cornerSmoothing: cornerSmoothing, preserveSmoothing: false, roundingAndSmoothingBudget: min(width, height) / 2)
-        
         let stringPath = getSVGPathFromPathParams(width: width, height: height, curveProperties: curveProperties)
         let svgString = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 \(height) \(width)'><path d='\(stringPath)'/></svg>"
-        
         let paths = SVGBezierPath.paths(fromSVGString: svgString)
         
         return paths[0].cgPath;
     }
-
-    
     
     static func getSVGPathFromPathParams(width: CGFloat, height: CGFloat, curveProperties: CurveProperties) -> String {
-        
         let pathString = """
             M \(width - curveProperties.p) 0
             \(SquirclePath.getTopRightPath(curveProperties: curveProperties))
@@ -38,7 +42,6 @@ struct SquirclePath {
             Z
             """
         
-
         return pathString.replacingOccurrences(of: "[\\t\\s\\n]+", with: " ", options: .regularExpression).trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
@@ -50,7 +53,6 @@ struct SquirclePath {
             c \(curveProperties.c) \(-curveProperties.d)  \(curveProperties.b + curveProperties.c) \(-curveProperties.d) \(curveProperties.a + curveProperties.b + curveProperties.c) \(-curveProperties.d)
             """;
         }
-        
         return "";
     }
     
@@ -62,7 +64,6 @@ struct SquirclePath {
             c \(-curveProperties.d) \(-curveProperties.c) \(-curveProperties.d) \(-(curveProperties.b + curveProperties.c)) \(-curveProperties.d) \(-(curveProperties.a + curveProperties.b + curveProperties.c))
             """;
         }
-        
         return "";
     }
     
@@ -74,7 +75,6 @@ struct SquirclePath {
             c \(-curveProperties.c) \(curveProperties.d) \(-(curveProperties.b + curveProperties.c)) \(curveProperties.d) \(-(curveProperties.a + curveProperties.b + curveProperties.c)) \(curveProperties.d)
             """;
         }
-        
         return "";
     }
     
@@ -86,22 +86,20 @@ struct SquirclePath {
             c \(curveProperties.d) \(curveProperties.c) \(curveProperties.d) \(curveProperties.c + curveProperties.d) \(curveProperties.d) \(curveProperties.a + curveProperties.b + curveProperties.c)
             """;
         }
-        
         return "";
     }
     
     
     static func calculateCurveProperties(cornerRadius: CGFloat, cornerSmoothing: CGFloat, preserveSmoothing: Bool, roundingAndSmoothingBudget: CGFloat) -> CurveProperties {
-
         var p = (1 + cornerSmoothing) * cornerRadius
         var cornerSmoothing = cornerSmoothing
-
+        
         if !preserveSmoothing {
             let maxCornerSmoothing = roundingAndSmoothingBudget / cornerRadius - 1
             cornerSmoothing = min(cornerSmoothing, maxCornerSmoothing)
             p = min(p, roundingAndSmoothingBudget)
         }
-
+        
         let arcMeasure = 90 * (1 - cornerSmoothing)
         let arcSectionLength = sin(toRadians(arcMeasure / 2)) * cornerRadius * sqrt(2)
         let angleAlpha = (90 - arcMeasure) / 2
@@ -111,7 +109,7 @@ struct SquirclePath {
         let d = c * tan(toRadians(angleBeta))
         var b = (p - arcSectionLength - c - d) / 3
         var a = 2 * b
-
+        
         if preserveSmoothing && p > roundingAndSmoothingBudget {
             let p1ToP3MaxDistance = roundingAndSmoothingBudget - d - arcSectionLength - c
             let minA = p1ToP3MaxDistance / 6
@@ -120,7 +118,7 @@ struct SquirclePath {
             a = p1ToP3MaxDistance - b
             p = min(p, roundingAndSmoothingBudget)
         }
-
+        
         return CurveProperties(a: a, b: b, c: c, d: d, p: p, arcSectionLength: arcSectionLength, cornerRadius: cornerRadius)
     }
     

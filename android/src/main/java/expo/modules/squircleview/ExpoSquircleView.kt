@@ -9,7 +9,6 @@ import android.graphics.RectF
 import android.util.DisplayMetrics
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.views.ExpoView
-import kotlin.math.min
 
 data class CurveProperties(
     var a: Float,
@@ -58,7 +57,6 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // Draw the fill
         val fillPaint = Paint(paint)
         fillPaint.color = backgroundColor
         canvas.drawPath(path, fillPaint)
@@ -76,10 +74,7 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
         super.onSizeChanged(w, h, oldw, oldh)
 
         val fillRect = RectF(
-            borderWidth,
-            borderWidth,
-            w.toFloat(),
-            h.toFloat()
+            borderWidth, borderWidth, w.toFloat(), h.toFloat()
         )
 
         path.reset()
@@ -90,18 +85,13 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
     fun setCornerSmoothing(c: Int) {
         cornerSmoothing = c
 
-        // Recalculate the path with the new corner smoothing value
         val rect = RectF(
-            borderWidth,
-            borderWidth,
-            width.toFloat(),
-            height.toFloat()
+            borderWidth, borderWidth, width.toFloat(), height.toFloat()
         )
 
         path.reset()
         path.addPath(getSquirclePath(rect))
 
-        // Redraw the view
         invalidate()
     }
 
@@ -109,10 +99,7 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
         borderRadius = b;
 
         val rect = RectF(
-            borderWidth,
-            borderWidth,
-            width.toFloat() - borderWidth,
-            height.toFloat() - borderWidth
+            borderWidth, borderWidth, width.toFloat() - borderWidth, height.toFloat() - borderWidth
         )
 
         path.reset()
