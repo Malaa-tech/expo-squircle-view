@@ -1,5 +1,5 @@
 {
-  "name": "expo-squircle-view-example",
+  "name": "react-native-squircle-view-example",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -10,8 +10,13 @@
   },
   "dependencies": {
     "expo": "~49.0.15",
+    "figma-squircle": "^0.3.1",
     "react": "18.2.0",
-    "react-native": "0.72.6"
+    "react-native": "0.72.6",
+    "react-native-figma-squircle": "^0.3.4",
+    "react-native-svg": "13.9.0",
+    "expo-splash-screen": "~0.20.5",
+    "expo-status-bar": "~1.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
