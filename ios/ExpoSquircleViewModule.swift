@@ -4,12 +4,7 @@ public class ExpoSquircleViewModule: Module {
     public func definition() -> ModuleDefinition {
         Name("ExpoSquircleView")
         
-        View(ExpoSquircleView.self) {
-            Prop("name") { (view: ExpoSquircleView, prop: String) in
-                print(prop)
-                print("here got the name")
-            }
-            
+        View(ExpoSquircleView.self) { 
             Prop("backgroundColor") { (view: ExpoSquircleView, prop: UIColor) in
                 view.squircleLayer.fillColor = prop.cgColor
             }

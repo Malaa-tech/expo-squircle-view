@@ -7,7 +7,6 @@ class ExpoSquircleView: ExpoView {
     var radius: CGFloat = 0
     var cornerSmoothing: CGFloat = 1
     
-    
     @objc(setCornerSmoothing:)
     func setCornerSmoothing(_ cornerSmoothing: CGFloat) {
         self.cornerSmoothing = cornerSmoothing

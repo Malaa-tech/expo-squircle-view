@@ -1,7 +1,8 @@
-export type ChangeEventPayload = {
-  value: string;
-};
-
 export type ExpoSquircleViewProps = {
-  name: string;
+  cornerSmoothing: number;
+  borderRadius: number;
+  backgroundColor: string;
+  borderColor: string;
+  borderWidth: number;
+  style: any;
 };

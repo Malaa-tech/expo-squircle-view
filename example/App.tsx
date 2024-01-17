@@ -7,9 +7,9 @@ import { getSvgPath } from "figma-squircle";
 // 200 200 problem
 
 export default function App() {
-  const WIDTH = 200;
+  const WIDTH = 300;
   const HEIGHT = 200;
-  const CORNER_RADIUS = 40;
+  const CORNER_RADIUS = 45;
   const CORNER_SMOOTHING = 100;
   const TEXT = "Malaa Techonology Company";
 
