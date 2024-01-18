@@ -136,11 +136,16 @@ import { ExpoSquircleButtonView } from "expo-squircle-view";
 
 ### Kudos
 Libraries that made this possible
+
 https://github.com/phamfoo/figma-squircle
+
 https://github.com/phamfoo/react-native-figma-squircle
+
 https://github.com/samuel-rl/react-native-squircle
 
+
 Blog from figma team explaining squircle
+
 https://www.figma.com/blog/desperately-seeking-squircles/
 
 
