@@ -1,11 +1,20 @@
 import android.graphics.Path
 import androidx.core.graphics.PathParser
-import expo.modules.squircleview.CurveProperties
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.math.tan
+
+data class CurveProperties(
+    var a: Float,
+    var b: Float,
+    var c: Float,
+    var d: Float,
+    var p: Float,
+    var arcSectionLength: Float,
+    var cornerRadius: Float
+)
 
 class SquirclePath(
     private var width: Float,

@@ -7,26 +7,19 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.util.DisplayMetrics
+import android.util.Log
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.views.ExpoView
 
-data class CurveProperties(
-    var a: Float,
-    var b: Float,
-    var c: Float,
-    var d: Float,
-    var p: Float,
-    var arcSectionLength: Float,
-    var cornerRadius: Float
-)
 
 class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val borderPaint = Paint(paint)
     private val path = Path()
     private var cornerSmoothing = 0
     private var borderColor = 0xFF000000.toInt()
     private var borderWidth = 0f
-    private var backgroundColor = 0x00000000.toInt()
+    private var backgroundColor = 0x00000000
     private var borderRadius = 0f;
 
     init {
@@ -36,76 +29,54 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
     }
 
 
-    private fun convertDpToPixel(dp: Float, context: Context): Float {
-        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
-
-    private fun getSquirclePath(
-        rect: RectF,
-    ): Path {
-        val width = rect.right
-        val height = rect.bottom
-
-        return SquirclePath(
-            width,
-            height,
-            borderRadius = convertDpToPixel(borderRadius, context),
-            cornerSmoothing = cornerSmoothing.toFloat() / 100
-        )
-    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        val fillPaint = Paint(paint)
-        fillPaint.color = backgroundColor
-        canvas.drawPath(path, fillPaint)
+        paint.color = backgroundColor
+        canvas.drawPath(path, paint)
 
         if (borderWidth > 0) {
-            val borderPaint = Paint(fillPaint)
             borderPaint.color = borderColor
             borderPaint.style = Paint.Style.STROKE
-            borderPaint.strokeWidth = convertDpToPixel(borderWidth, context).toFloat()
+            borderPaint.strokeWidth = Utils.convertDpToPixel(borderWidth, context).toFloat()
             canvas.drawPath(path, borderPaint)
         }
     }
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
+    override fun onSizeChanged(newWidth: Int, newHeight: Int, oldWidth: Int, oldHeight: Int) {
+        super.onSizeChanged(newWidth, newHeight, oldWidth, oldHeight)
+        resetSquirclePath(newWidth.toFloat(), newHeight.toFloat())
+    }
 
-        val fillRect = RectF(
-            borderWidth, borderWidth, w.toFloat(), h.toFloat()
+    private fun resetSquirclePath(
+        width: Float,
+        height: Float
+    ) {
+        Log.d("TEST", "$width  $height")
+
+        if (width == 0f || height == 0f) {
+            return;
+        }
+
+        val newPath = SquirclePath(
+            width,
+            height,
+            borderRadius = Utils.convertDpToPixel(borderRadius, context),
+            cornerSmoothing = cornerSmoothing.toFloat() / 100
         )
 
         path.reset()
-        path.addPath(getSquirclePath(fillRect))
+        path.addPath(newPath)
     }
-
 
     fun setCornerSmoothing(c: Int) {
         cornerSmoothing = c
-
-        val rect = RectF(
-            borderWidth, borderWidth, width.toFloat(), height.toFloat()
-        )
-
-        path.reset()
-        path.addPath(getSquirclePath(rect))
-
+        resetSquirclePath(width.toFloat(), height.toFloat())
         invalidate()
     }
 
     fun setBorderRadius(b: Float) {
         borderRadius = b;
-
-        val rect = RectF(
-            borderWidth, borderWidth, width.toFloat() - borderWidth, height.toFloat() - borderWidth
-        )
-
-        path.reset()
-        path.addPath(getSquirclePath(rect))
-
-        // Redraw the view
+        resetSquirclePath(width.toFloat(), height.toFloat())
         invalidate()
     }
 
