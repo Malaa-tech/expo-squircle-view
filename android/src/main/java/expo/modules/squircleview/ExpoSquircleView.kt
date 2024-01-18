@@ -5,10 +5,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.util.Log
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.views.ExpoView
-
 
 class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
