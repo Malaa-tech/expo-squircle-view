@@ -18,12 +18,16 @@ class ExpoSquircleViewModule : Module() {
                 view.setBorderRadius(prop)
             }
 
-            Prop("backgroundColor") { view: ExpoSquircleView, prop: String ->
-                view.setViewBackgroundColor(prop.toColorInt())
+            Prop("backgroundColor") { view: ExpoSquircleView, prop: Int? ->
+                if (prop != null) {
+                    view.setViewBackgroundColor(prop)
+                }
             }
 
-            Prop("borderColor") { view: ExpoSquircleView, prop: String ->
-                view.setBorderColor(prop.toColorInt())
+            Prop("borderColor") { view: ExpoSquircleView, prop: Int? ->
+                if (prop != null) {
+                    view.setBorderColor(prop)
+                }
             }
 
             Prop("borderWidth") { view: ExpoSquircleView, prop: Float ->

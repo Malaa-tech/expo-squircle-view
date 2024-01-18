@@ -1,17 +1,30 @@
-import { TouchableOpacityProps, ViewProps } from "react-native";
+import {
+  ColorValue,
+  TouchableOpacityProps,
+  ViewProps,
+  processColor,
+} from "react-native";
+
+type SquircleProps = {
+  cornerSmoothing?: number;
+  borderRadius?: number;
+  borderWidth?: number;
+};
+
+export type ExpoSquircleNativeViewProps = {
+  backgroundColor?: ReturnType<typeof processColor>;
+  borderColor?: ReturnType<typeof processColor>;
+} & ViewProps &
+  SquircleProps;
 
 export type ExpoSquircleViewProps = {
-  cornerSmoothing?: number;
-  borderRadius?: number;
-  backgroundColor?: string;
-  borderColor?: string;
-  borderWidth?: number;
-} & ViewProps;
+  backgroundColor?: ColorValue;
+  borderColor?: ColorValue;
+} & ViewProps &
+  SquircleProps;
 
 export type ExpoSquircleButtonViewProps = {
-  cornerSmoothing?: number;
-  borderRadius?: number;
-  backgroundColor?: string;
-  borderColor?: string;
-  borderWidth?: number;
-} & TouchableOpacityProps;
+  backgroundColor?: ColorValue;
+  borderColor?: ColorValue;
+} & TouchableOpacityProps &
+  SquircleProps;

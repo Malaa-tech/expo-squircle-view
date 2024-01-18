@@ -1,14 +1,20 @@
 import { requireNativeViewManager } from "expo-modules-core";
 import * as React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, processColor } from "react-native";
 
-import { ExpoSquircleViewProps } from "./ExpoSquircleView.types";
+import {
+  ExpoSquircleButtonViewProps,
+  ExpoSquircleNativeViewProps,
+  ExpoSquircleViewProps,
+} from "./ExpoSquircleView.types";
 
-const NativeView: React.ComponentType<ExpoSquircleViewProps> =
+const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
   requireNativeViewManager("ExpoSquircleView");
 
 const ExpoSquircleViewNativeWrapper = (
-  props: React.PropsWithChildren<ExpoSquircleViewProps>
+  props: React.PropsWithChildren<
+    ExpoSquircleViewProps | ExpoSquircleButtonViewProps
+  >
 ) => {
   const {
     cornerSmoothing = 100,
@@ -20,8 +26,8 @@ const ExpoSquircleViewNativeWrapper = (
 
   return (
     <NativeView
-      backgroundColor={backgroundColor}
-      borderColor={borderColor}
+      backgroundColor={processColor(backgroundColor)}
+      borderColor={processColor(borderColor)}
       borderRadius={borderRadius}
       cornerSmoothing={cornerSmoothing}
       borderWidth={borderWidth}
@@ -54,7 +60,7 @@ const ExpoSquircleView = (
 };
 
 export const ExpoSquircleButtonView = (
-  props: React.PropsWithChildren<ExpoSquircleViewProps>
+  props: React.PropsWithChildren<ExpoSquircleButtonViewProps>
 ) => {
   const { style, children } = props;
 
