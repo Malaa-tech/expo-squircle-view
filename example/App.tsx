@@ -1,17 +1,23 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
-import * as ExpoSquircleView from "expo-squircle-view";
+import { ExpoSquircleView, ExpoSquircleButtonView } from "expo-squircle-view";
 import { SquircleView } from "react-native-figma-squircle";
 import { getSvgPath } from "figma-squircle";
 
-// 200 200 problem
-
 export default function App() {
-  const WIDTH = 300;
-  const HEIGHT = 200;
-  const CORNER_RADIUS = 45;
+  const WIDTH = 200;
+  const HEIGHT = 120;
+  const CORNER_RADIUS = 30;
   const CORNER_SMOOTHING = 100;
-  const TEXT = "Malaa Techonology Company";
+  const BORDER_WIDTH = 2;
+  const BORDER_COLOR = "blue";
+  const BACKGROUND_COLOR = "pink";
 
   console.log(
     getSvgPath({
@@ -23,80 +29,84 @@ export default function App() {
   );
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={{
-          width: WIDTH,
-          height: HEIGHT,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={() => {}}
-      >
-        <ExpoSquircleView.ExpoSquircleView
-          backgroundColor={"#FFC0CB"}
-          borderWidth={3}
-          borderColor={"blue"}
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <ExpoSquircleView
+          backgroundColor={BACKGROUND_COLOR}
+          borderWidth={BORDER_WIDTH}
+          borderColor={BORDER_COLOR}
           borderRadius={CORNER_RADIUS}
           cornerSmoothing={CORNER_SMOOTHING}
           style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-          }}
-        />
-        <Text>{TEXT}</Text>
-      </TouchableOpacity>
-
-      <SquircleView
-        style={{
-          width: WIDTH,
-          height: HEIGHT,
-          marginTop: 50
-        }}
-        squircleParams={{
-          cornerSmoothing: CORNER_SMOOTHING / 100,
-          cornerRadius: CORNER_RADIUS,
-          fillColor: "pink",
-        }}
-      >
-        <TouchableOpacity
-          style={{
-            width: "100%",
-            height: "100%",
+            marginTop: 20,
+            width: WIDTH,
+            height: HEIGHT,
+            flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
           }}
-          onPress={() => {}}
+        >
+          <Text>Our component</Text>
+        </ExpoSquircleView>
+
+        <ExpoSquircleButtonView
+         backgroundColor={BACKGROUND_COLOR}
+         borderWidth={BORDER_WIDTH}
+         borderColor={BORDER_COLOR}
+         borderRadius={CORNER_RADIUS}
+         cornerSmoothing={CORNER_SMOOTHING}
+          style={{
+            marginTop: 20,
+            width: WIDTH,
+            height: HEIGHT,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text>Our clickable component</Text>
+        </ExpoSquircleButtonView>
+
+        <SquircleView
+          style={{
+            width: WIDTH,
+            height: HEIGHT,
+            marginTop: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          squircleParams={{
+            cornerSmoothing: CORNER_SMOOTHING / 100,
+            cornerRadius: CORNER_RADIUS,
+            fillColor: BACKGROUND_COLOR,
+          }}
         >
           <Text>react-native-figma-squircle</Text>
-        </TouchableOpacity>
-      </SquircleView>
+        </SquircleView>
 
-      <View
-        style={{
-          width: WIDTH,
-          height: HEIGHT,
-          marginTop: 50,
-          backgroundColor: "pink",
-          borderRadius: CORNER_RADIUS,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text>DEFAULT VIEW</Text>
-      </View>
-    </View>
+        <View
+          style={{
+            width: WIDTH,
+            height: HEIGHT,
+            marginTop: 20,
+            backgroundColor: BACKGROUND_COLOR,
+            borderRadius: CORNER_RADIUS,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text>DEFAULT VIEW</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingVertical: 50,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
   },
 });
