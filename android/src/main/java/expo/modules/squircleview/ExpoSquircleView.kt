@@ -5,8 +5,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.RectF
-import android.util.DisplayMetrics
 import android.util.Log
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.views.ExpoView
@@ -51,16 +49,17 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
         width: Float,
         height: Float
     ) {
-        Log.d("TEST", "$width  $height")
-
         if (width == 0f || height == 0f) {
             return;
         }
 
+        val checkedRadius = minOf(borderRadius, width / 2f, height / 2f)
+
+
         val newPath = SquirclePath(
             width,
             height,
-            borderRadius = Utils.convertDpToPixel(borderRadius, context),
+            borderRadius = checkedRadius,
             cornerSmoothing = cornerSmoothing.toFloat() / 100
         )
 
@@ -70,12 +69,15 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
 
     fun setCornerSmoothing(c: Int) {
         cornerSmoothing = c
+
         resetSquirclePath(width.toFloat(), height.toFloat())
         invalidate()
     }
 
     fun setBorderRadius(b: Float) {
-        borderRadius = b;
+        val pixelRadius = Utils.convertDpToPixel(b, context)
+        borderRadius = pixelRadius
+
         resetSquirclePath(width.toFloat(), height.toFloat())
         invalidate()
     }
