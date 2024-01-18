@@ -7,14 +7,12 @@ class ExpoSquircleView: ExpoView {
     var radius: CGFloat = 0
     var cornerSmoothing: CGFloat = 1
     
-    @objc(setCornerSmoothing:)
     func setCornerSmoothing(_ cornerSmoothing: CGFloat) {
         self.cornerSmoothing = cornerSmoothing
         squircleLayer.setNeedsLayout()
         setNeedsLayout()
     }
     
-    @objc(setRadius:)
     func setRadius(_ radius: CGFloat) {
         self.radius = radius
         squircleLayer.setNeedsLayout()
@@ -44,7 +42,9 @@ class ExpoSquircleView: ExpoView {
         let width: CGFloat = bounds.width
         let height: CGFloat = bounds.height
         
-        return SquirclePath.create(width: width, height: height, radius: radius, cornerSmoothing: cornerSmoothing / 100);
+        let checkedRadius = min(radius, bounds.width / 2, bounds.height / 2)
+        
+        return SquirclePath.create(width: width, height: height, radius: checkedRadius, cornerSmoothing: cornerSmoothing / 100);
     }
 }
 
