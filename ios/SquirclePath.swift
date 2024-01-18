@@ -20,8 +20,8 @@ struct CurveProperties {
 
 struct SquirclePath {
     
-    static func create(width: CGFloat, height: CGFloat, radius: CGFloat, cornerSmoothing: CGFloat) -> CGPath {
-        let curveProperties = calculateCurveProperties(cornerRadius: radius, cornerSmoothing: cornerSmoothing, preserveSmoothing: false, roundingAndSmoothingBudget: min(width, height) / 2)
+    static func create(width: CGFloat, height: CGFloat, radius: CGFloat, cornerSmoothing: CGFloat, preserveSmoothing: Bool) -> CGPath {
+        let curveProperties = calculateCurveProperties(cornerRadius: radius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing, roundingAndSmoothingBudget: min(width, height) / 2)
         let stringPath = getSVGPathFromPathParams(width: width, height: height, curveProperties: curveProperties)
         let svgString = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 \(height) \(width)'><path d='\(stringPath)'/></svg>"
         let paths = SVGBezierPath.paths(fromSVGString: svgString)

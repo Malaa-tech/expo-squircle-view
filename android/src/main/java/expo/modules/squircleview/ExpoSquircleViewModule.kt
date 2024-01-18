@@ -1,6 +1,5 @@
 package expo.modules.squircleview
 
-import androidx.core.graphics.toColorInt
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -32,6 +31,10 @@ class ExpoSquircleViewModule : Module() {
 
             Prop("borderWidth") { view: ExpoSquircleView, prop: Float ->
                 view.setBorderWidth(prop)
+            }
+
+            Prop("preserveSmoothing") { view: ExpoSquircleView, prop: Boolean ->
+                view.setPreserveSmoothing(prop)
             }
         }
     }

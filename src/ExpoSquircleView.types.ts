@@ -9,6 +9,7 @@ type SquircleProps = {
   cornerSmoothing?: number;
   borderRadius?: number;
   borderWidth?: number;
+  preserveSmoothing?: boolean;
 };
 
 export type ExpoSquircleNativeViewProps = {

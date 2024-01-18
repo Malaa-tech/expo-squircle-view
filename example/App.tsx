@@ -13,7 +13,7 @@ import { getSvgPath } from "figma-squircle";
 export default function App() {
   const WIDTH = 200;
   const HEIGHT = 120;
-  const CORNER_RADIUS = 30;
+  const CORNER_RADIUS = 40;
   const CORNER_SMOOTHING = 100;
   const BORDER_WIDTH = 2;
   const BORDER_COLOR = "blue";
@@ -37,6 +37,7 @@ export default function App() {
           borderColor={BORDER_COLOR}
           borderRadius={CORNER_RADIUS}
           cornerSmoothing={CORNER_SMOOTHING}
+          preserveSmoothing={true}
           style={{
             marginTop: 20,
             width: WIDTH,

@@ -16,10 +16,11 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
     private var borderColor = 0xFF000000.toInt()
     private var borderWidth = 0f
     private var backgroundColor = 0x00000000
-    private var borderRadius = 0f;
+    private var borderRadius = 0f
+    private var preserveSmoothing = false
 
     init {
-        paint.color = backgroundColor;
+        paint.color = backgroundColor
         paint.style = Paint.Style.FILL
         setWillNotDraw(false)
     }
@@ -47,17 +48,18 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
         height: Float
     ) {
         if (width == 0f || height == 0f) {
-            return;
+            return
         }
 
         val checkedRadius = minOf(borderRadius, width / 2f, height / 2f)
-        val checkedCornerSmoothing = maxOf(minOf(cornerSmoothing.toFloat() / 100, 1f),0f);
+        val checkedCornerSmoothing = maxOf(minOf(cornerSmoothing.toFloat() / 100, 1f),0f)
 
         val newPath = SquirclePath(
             width,
             height,
             borderRadius = checkedRadius,
-            cornerSmoothing = checkedCornerSmoothing
+            cornerSmoothing = checkedCornerSmoothing,
+            preserveSmoothing,
         )
 
         path.reset()
@@ -79,9 +81,16 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
         invalidate()
     }
 
+    fun setPreserveSmoothing(p: Boolean) {
+        preserveSmoothing = p
+
+        resetSquirclePath(width.toFloat(), height.toFloat())
+        invalidate()
+    }
+
     fun setViewBackgroundColor(color: Int) {
-        backgroundColor = color;
-        paint.color = backgroundColor;
+        backgroundColor = color
+        paint.color = backgroundColor
         invalidate()
     }
 

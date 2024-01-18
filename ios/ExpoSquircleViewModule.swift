@@ -20,6 +20,9 @@ public class ExpoSquircleViewModule: Module {
             Prop("cornerSmoothing") { (view: ExpoSquircleView, prop: Int) in
                 view.setCornerSmoothing(CGFloat(prop))
             }
+            Prop("preserveSmoothing") { (view: ExpoSquircleView, prop: Bool) in
+                view.setPreserveSmoothing(prop)
+            }
         }
     }
 }

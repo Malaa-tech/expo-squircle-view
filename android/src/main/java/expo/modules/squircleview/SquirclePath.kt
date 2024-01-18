@@ -20,14 +20,15 @@ class SquirclePath(
     private var width: Float,
     private var height: Float,
     private var borderRadius: Float,
-    private var cornerSmoothing: Float
+    private var cornerSmoothing: Float,
+    private var preserveSmoothing: Boolean
 ) : Path() {
 
     init {
         val curvedProperties = calculateCurveProperties(
             this.borderRadius,
             this.cornerSmoothing,
-            false,
+            this.preserveSmoothing,
             min(this.width, this.height) / 2
         );
         val path =

@@ -22,6 +22,7 @@ const ExpoSquircleViewNativeWrapper = (
     borderRadius = 0,
     borderColor = "transparent",
     borderWidth = 0,
+    preserveSmoothing = false
   } = props;
 
   return (
@@ -31,6 +32,7 @@ const ExpoSquircleViewNativeWrapper = (
       borderRadius={borderRadius}
       cornerSmoothing={cornerSmoothing}
       borderWidth={borderWidth}
+      preserveSmoothing={preserveSmoothing}
       style={StyleSheet.absoluteFill}
     />
   );
