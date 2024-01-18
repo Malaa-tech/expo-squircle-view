@@ -10,21 +10,30 @@ const NativeView: React.ComponentType<ExpoSquircleViewProps> =
 const ExpoSquircleViewNativeWrapper = (
   props: React.PropsWithChildren<ExpoSquircleViewProps>
 ) => {
-  return <NativeView {...props} style={StyleSheet.absoluteFill} />;
-};
-
-const ExpoSquircleView = (
-  props: React.PropsWithChildren<ExpoSquircleViewProps>
-) => {
   const {
     cornerSmoothing = 100,
     backgroundColor = "transparent",
     borderRadius = 0,
     borderColor = "transparent",
     borderWidth = 0,
-    style,
-    children,
   } = props;
+
+  return (
+    <NativeView
+      backgroundColor={backgroundColor}
+      borderColor={borderColor}
+      borderRadius={borderRadius}
+      cornerSmoothing={cornerSmoothing}
+      borderWidth={borderWidth}
+      style={StyleSheet.absoluteFill}
+    />
+  );
+};
+
+const ExpoSquircleView = (
+  props: React.PropsWithChildren<ExpoSquircleViewProps>
+) => {
+  const { style, children } = props;
 
   return (
     <View
@@ -34,17 +43,11 @@ const ExpoSquircleView = (
         style,
         {
           borderWidth: undefined,
-          borderRadius: undefined
+          borderRadius: undefined,
         },
       ]}
     >
-      <ExpoSquircleViewNativeWrapper
-        backgroundColor={backgroundColor}
-        borderColor={borderColor}
-        borderRadius={borderRadius}
-        cornerSmoothing={cornerSmoothing}
-        borderWidth={borderWidth}
-      />
+      <ExpoSquircleViewNativeWrapper {...props} />
       {children}
     </View>
   );
@@ -53,15 +56,7 @@ const ExpoSquircleView = (
 export const ExpoSquircleButtonView = (
   props: React.PropsWithChildren<ExpoSquircleViewProps>
 ) => {
-  const {
-    cornerSmoothing = 100,
-    backgroundColor = "transparent",
-    borderRadius = 0,
-    borderColor = "transparent",
-    borderWidth = 0,
-    style,
-    children,
-  } = props;
+  const { style, children } = props;
 
   return (
     <TouchableOpacity
@@ -71,21 +66,15 @@ export const ExpoSquircleButtonView = (
         style,
         {
           borderWidth: undefined,
-          borderRadius: undefined
+          borderRadius: undefined,
         },
       ]}
     >
-      <ExpoSquircleViewNativeWrapper
-        backgroundColor={backgroundColor}
-        borderColor={borderColor}
-        borderRadius={borderRadius}
-        cornerSmoothing={cornerSmoothing}
-        borderWidth={borderWidth}
-      />
+      <ExpoSquircleViewNativeWrapper {...props} />
       {children}
     </TouchableOpacity>
   );
-}
+};
 
 export default ExpoSquircleView;
 
