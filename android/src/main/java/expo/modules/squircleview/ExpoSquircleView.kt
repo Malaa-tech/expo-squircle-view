@@ -26,7 +26,6 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
         setWillNotDraw(false)
     }
 
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         paint.color = backgroundColor
@@ -54,13 +53,13 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
         }
 
         val checkedRadius = minOf(borderRadius, width / 2f, height / 2f)
-
+        val checkedCornerSmoothing = maxOf(minOf(cornerSmoothing.toFloat() / 100, 1f),0f);
 
         val newPath = SquirclePath(
             width,
             height,
             borderRadius = checkedRadius,
-            cornerSmoothing = cornerSmoothing.toFloat() / 100
+            cornerSmoothing = checkedCornerSmoothing
         )
 
         path.reset()

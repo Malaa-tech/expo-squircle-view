@@ -43,8 +43,9 @@ class ExpoSquircleView: ExpoView {
         let height: CGFloat = bounds.height
         
         let checkedRadius = min(radius, bounds.width / 2, bounds.height / 2)
+        let checkedCornerSmoothing =  max(min(cornerSmoothing / 100, 1), 0)
         
-        return SquirclePath.create(width: width, height: height, radius: checkedRadius, cornerSmoothing: cornerSmoothing / 100);
+        return SquirclePath.create(width: width, height: height, radius: checkedRadius, cornerSmoothing: checkedCornerSmoothing);
     }
 }
 
