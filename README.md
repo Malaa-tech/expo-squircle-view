@@ -119,3 +119,28 @@ export default function App() {
 }
 ```
 
+### Using as a Button
+
+import ExpoSquircleButtonView instead of ExpoSquircleView, and use it the same way as a TouchableOpacity
+
+```tsx | pure
+import { ExpoSquircleButtonView } from "expo-squircle-view"; 
+
+...
+  <ExpoSquircleButtonView>
+  ...
+  </ExpoSquircleButtonView>
+...
+
+```
+
+### Kudos
+Libraries that made this possible
+https://github.com/phamfoo/figma-squircle
+https://github.com/phamfoo/react-native-figma-squircle
+https://github.com/samuel-rl/react-native-squircle
+
+Blog from figma team explaining squircle
+https://www.figma.com/blog/desperately-seeking-squircles/
+
+
