@@ -11,7 +11,7 @@ A native implementation for figma corner smoothing (Squircle Shape) for react na
 ```
 npm install expo-squircle-view 
 ```
-
+or
 ```
 yarn add expo-squircle-view 
 ```
