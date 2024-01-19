@@ -1,6 +1,6 @@
 {
   "name": "expo-squircle-view",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A native implementation for figma corner smoothing (Squircle Shape) for react native expo apps",
   "main": "build/index.js",
   "types": "build/index.d.ts",
