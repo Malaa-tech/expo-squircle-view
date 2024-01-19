@@ -51,15 +51,13 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
             return
         }
 
-        val checkedRadius = minOf(borderRadius, width / 2f, height / 2f)
-        val checkedCornerSmoothing = maxOf(minOf(cornerSmoothing.toFloat() / 100, 1f),0f)
-
         val newPath = SquirclePath(
             width,
             height,
-            borderRadius = checkedRadius,
-            cornerSmoothing = checkedCornerSmoothing,
+            borderRadius,
+            cornerSmoothing / 100f,
             preserveSmoothing,
+            borderWidth = Utils.convertDpToPixel(this.borderWidth, context)
         )
 
         path.reset()
@@ -68,7 +66,6 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
 
     fun setCornerSmoothing(c: Int) {
         cornerSmoothing = c
-
         resetSquirclePath(width.toFloat(), height.toFloat())
         invalidate()
     }
@@ -101,6 +98,7 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
 
     fun setBorderWidth(width: Float) {
         borderWidth = width
+        resetSquirclePath(this.width.toFloat(), this.height.toFloat())
         invalidate()
     }
 }

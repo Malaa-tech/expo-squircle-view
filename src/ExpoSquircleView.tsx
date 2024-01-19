@@ -22,7 +22,8 @@ const ExpoSquircleViewNativeWrapper = (
     borderRadius = 0,
     borderColor = "transparent",
     borderWidth = 0,
-    preserveSmoothing = false
+    preserveSmoothing = false,
+    enabledIOSAnimation = false
   } = props;
 
   return (
@@ -33,12 +34,11 @@ const ExpoSquircleViewNativeWrapper = (
       cornerSmoothing={cornerSmoothing}
       borderWidth={borderWidth}
       preserveSmoothing={preserveSmoothing}
+      enabledIOSAnimation={enabledIOSAnimation}
       style={StyleSheet.absoluteFill}
     />
   );
 };
-
-
 
 export const SquircleButton = (
   props: React.PropsWithChildren<SquircleButtonProps>

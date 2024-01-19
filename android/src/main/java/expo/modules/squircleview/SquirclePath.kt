@@ -1,3 +1,4 @@
+import android.graphics.Matrix
 import android.graphics.Path
 import androidx.core.graphics.PathParser
 import kotlin.math.cos
@@ -21,26 +22,41 @@ class SquirclePath(
     private var height: Float,
     private var borderRadius: Float,
     private var cornerSmoothing: Float,
-    private var preserveSmoothing: Boolean
+    private var preserveSmoothing: Boolean,
+    private var borderWidth: Float
 ) : Path() {
 
     init {
+        val checkedRadius = minOf(this.borderRadius, (this.width - this.borderWidth) / 2f, (this.height - this.borderWidth) / 2f)
+        val checkedCornerSmoothing = maxOf(minOf(this.cornerSmoothing, 1f),0f)
+
         val curvedProperties = calculateCurveProperties(
-            this.borderRadius,
-            this.cornerSmoothing,
+            checkedRadius,
+            checkedCornerSmoothing,
             this.preserveSmoothing,
-            min(this.width, this.height) / 2
+            min(this.width - this.borderWidth / 2, this.height - this.borderWidth / 2) / 2
         );
         val path =
             PathParser.createPathFromPathData(
                 getSVGPathFromPathParams(
-                    this.width,
-                    this.height,
+                    this.width - this.borderWidth,
+                    this.height - this.borderWidth,
                     curvedProperties
                 )
             )
 
-        this.addPath(path)
+        // if borderWidth is greater than 0, we need to shift the shape
+        // to match the original width & height
+        val shiftX = borderWidth / 2f
+        val shiftY = borderWidth / 2f
+        val translationMatrix = Matrix().apply {
+            setTranslate(shiftX, shiftY)
+        }
+        val translatedPath = Path().apply {
+            path.transform(translationMatrix, this)
+        }
+
+        this.addPath(translatedPath)
     }
 
 

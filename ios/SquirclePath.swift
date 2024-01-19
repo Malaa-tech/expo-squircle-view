@@ -20,13 +20,26 @@ struct CurveProperties {
 
 struct SquirclePath {
     
-    static func create(width: CGFloat, height: CGFloat, radius: CGFloat, cornerSmoothing: CGFloat, preserveSmoothing: Bool) -> CGPath {
-        let curveProperties = calculateCurveProperties(cornerRadius: radius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing, roundingAndSmoothingBudget: min(width, height) / 2)
-        let stringPath = getSVGPathFromPathParams(width: width, height: height, curveProperties: curveProperties)
+    static func create(width: CGFloat, height: CGFloat, radius: CGFloat, cornerSmoothing: CGFloat, preserveSmoothing: Bool, borderWidth: CGFloat) -> CGPath {
+        
+        let checkedRadius = min(radius, (width - borderWidth)  / 2, (height - borderWidth) / 2)
+        let checkedCornerSmoothing =  max(min(cornerSmoothing / 100, 1), 0)
+        
+        let curveProperties = calculateCurveProperties(cornerRadius: checkedRadius, cornerSmoothing: checkedCornerSmoothing, preserveSmoothing: preserveSmoothing, roundingAndSmoothingBudget: min(width - borderWidth / 2, height - borderWidth / 2) / 2)
+        let stringPath = getSVGPathFromPathParams(width: width - borderWidth, height: height - borderWidth, curveProperties: curveProperties)
         let svgString = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 \(height) \(width)'><path d='\(stringPath)'/></svg>"
         let paths = SVGBezierPath.paths(fromSVGString: svgString)
+        let originalPath = paths[0].cgPath
         
-        return paths[0].cgPath;
+
+        // if borderWidth is greater than 0, we need to shift the shape
+        // to match the original width & height
+        var translationTransform = CGAffineTransform(translationX: borderWidth / 2, y: borderWidth / 2)
+        if let translatedPath = originalPath.copy(using: &translationTransform) {
+            return translatedPath
+        }
+        
+        return originalPath
     }
     
     static func getSVGPathFromPathParams(width: CGFloat, height: CGFloat, curveProperties: CurveProperties) -> String {

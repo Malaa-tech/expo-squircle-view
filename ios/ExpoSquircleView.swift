@@ -7,6 +7,7 @@ class ExpoSquircleView: ExpoView {
     var radius: CGFloat = 0
     var cornerSmoothing: CGFloat = 0
     var preserveSmoothing: Bool = false
+    var isAnimationEnabled: Bool = false
     
     required init(appContext: AppContext? = nil) {
         super.init(appContext: appContext)
@@ -31,10 +32,28 @@ class ExpoSquircleView: ExpoView {
         let width: CGFloat = bounds.width
         let height: CGFloat = bounds.height
         
-        let checkedRadius = min(radius, bounds.width / 2, bounds.height / 2)
-        let checkedCornerSmoothing =  max(min(cornerSmoothing / 100, 1), 0)
-        
-        return SquirclePath.create(width: width, height: height, radius: checkedRadius, cornerSmoothing: checkedCornerSmoothing, preserveSmoothing: preserveSmoothing);
+        return SquirclePath.create(width: width, height: height, radius: radius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing, borderWidth: squircleLayer.lineWidth);
+    }
+    
+    func setBackgroundColor(_ backgroundColor: UIColor) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(!isAnimationEnabled)
+        squircleLayer.fillColor = backgroundColor.cgColor
+        CATransaction.commit()
+    }
+    
+    func setBorderColor(_ borderColor: UIColor) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(!isAnimationEnabled)
+        squircleLayer.strokeColor = borderColor.cgColor
+        CATransaction.commit()
+    }
+    
+    func setBorderWidth(_ borderRadius: CGFloat) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(!isAnimationEnabled)
+        squircleLayer.lineWidth = borderRadius
+        CATransaction.commit()
     }
     
     func setCornerSmoothing(_ cornerSmoothing: CGFloat) {
