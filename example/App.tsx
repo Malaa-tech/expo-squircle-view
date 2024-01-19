@@ -1,85 +1,176 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { SquircleButton, SquircleView } from "expo-squircle-view";
 import { SquircleView as SvgSquircleView } from "react-native-figma-squircle";
 import { getSvgPath } from "figma-squircle";
+import { Slider } from "@miblanchard/react-native-slider";
+import React from "react";
 
 export default function App() {
-  const WIDTH = 200;
-  const HEIGHT = 120;
+  const WIDTH = 380;
+  const HEIGHT = 100;
   const CORNER_RADIUS = 40;
   const CORNER_SMOOTHING = 100;
-  const BORDER_WIDTH = 2;
-  const BORDER_COLOR = "blue";
-  const BACKGROUND_COLOR = "pink";
+  const BORDER_WIDTH = 4;
+  const BORDER_COLOR = "gray";
+  const BACKGROUND_COLOR = "white";
+  const PRESERVE_SMOOTHING = true;
 
-  console.log(
-    getSvgPath({
-      height: HEIGHT,
-      width: WIDTH,
-      cornerRadius: CORNER_RADIUS,
-      cornerSmoothing: CORNER_SMOOTHING / 100,
-    })
-  );
+  const [width, setWidth] = React.useState(WIDTH);
+  const [height, setHeight] = React.useState(HEIGHT);
+  const [cornerRadius, setCornerRadius] = React.useState(CORNER_RADIUS);
+  const [cornerSmoothing, setCornerSmoothing] =
+    React.useState(CORNER_SMOOTHING);
+  const [borderWidth, setBorderWidth] = React.useState(BORDER_WIDTH);
+
+  // console.log(
+  //   getSvgPath({
+  //     height: HEIGHT,
+  //     width: WIDTH,
+  //     cornerRadius: CORNER_RADIUS,
+  //     cornerSmoothing: CORNER_SMOOTHING / 100,
+  //   })
+  // );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
+        <View
+          style={{
+            width: "100%",
+            height: 200,
+            flexDirection: "row",
+            paddingHorizontal: 10,
+            gap: 12,
+            alignItems: "center",
+          }}
+        >
+          <View style={{ height: "100%", justifyContent: "space-around" }}>
+            <Text>Border Radius</Text>
+            <Text>Corner Smoothing</Text>
+            <Text>Width</Text>
+            <Text>Height</Text>
+            <Text>Border Width</Text>
+          </View>
+          <View
+            style={{ height: "100%", justifyContent: "space-between", flex: 1 }}
+          >
+            <Slider
+              value={cornerRadius}
+              onValueChange={(value) => {
+                setCornerRadius(value[0]);
+              }}
+              minimumValue={0}
+              maximumValue={100}
+              step={1}
+              animateTransitions
+              minimumTrackTintColor={"black"}
+              maximumTrackTintColor={"gray"}
+            />
+            <Slider
+              value={cornerSmoothing}
+              onValueChange={(value) => {
+                setCornerSmoothing(value[0]);
+              }}
+              minimumValue={0}
+              maximumValue={100}
+              step={1}
+              animateTransitions
+              minimumTrackTintColor={"black"}
+              maximumTrackTintColor={"gray"}
+            />
+            <Slider
+              value={width}
+              onValueChange={(value) => {
+                setWidth(value[0]);
+              }}
+              minimumValue={50}
+              maximumValue={400}
+              step={1}
+              animateTransitions
+              minimumTrackTintColor={"black"}
+              maximumTrackTintColor={"gray"}
+            />
+            <Slider
+              value={height}
+              onValueChange={(value) => {
+                setHeight(value[0]);
+              }}
+              minimumValue={50}
+              maximumValue={400}
+              step={1}
+              animateTransitions
+              minimumTrackTintColor={"black"}
+              maximumTrackTintColor={"gray"}
+            />
+            <Slider
+              value={borderWidth}
+              onValueChange={(value) => {
+                setBorderWidth(value[0]);
+              }}
+              minimumValue={1}
+              maximumValue={10}
+              step={1}
+              animateTransitions
+              minimumTrackTintColor={"black"}
+              maximumTrackTintColor={"gray"}
+            />
+          </View>
+        </View>
+
         <SquircleView
+          // backgroundColor={BACKGROUND_COLOR}
+          borderWidth={borderWidth}
+          borderColor={BORDER_COLOR}
+          borderRadius={cornerRadius}
+          cornerSmoothing={cornerSmoothing}
+          preserveSmoothing={PRESERVE_SMOOTHING}
+          backgroundColor={BACKGROUND_COLOR}
+          // enabledIOSAnimation
+          style={{
+            marginTop: 20,
+            width,
+            height,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text>Squircle</Text>
+        </SquircleView>
+
+        {/* <SquircleButton
           backgroundColor={BACKGROUND_COLOR}
           borderWidth={BORDER_WIDTH}
           borderColor={BORDER_COLOR}
-          borderRadius={CORNER_RADIUS}
+          borderRadius={cornerRadius}
           cornerSmoothing={CORNER_SMOOTHING}
-          preserveSmoothing={true}
           style={{
             marginTop: 20,
-            width: WIDTH,
-            height: HEIGHT,
+            width,
+            height,
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Text>Our component</Text>
-        </SquircleView>
-
-        <SquircleButton
-         backgroundColor={BACKGROUND_COLOR}
-         borderWidth={BORDER_WIDTH}
-         borderColor={BORDER_COLOR}
-         borderRadius={CORNER_RADIUS}
-         cornerSmoothing={CORNER_SMOOTHING}
-          style={{
-            marginTop: 20,
-            width: WIDTH,
-            height: HEIGHT,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text>Our clickable component</Text>
-        </SquircleButton>
+          <Text>ExpoSquircleButton</Text>
+        </SquircleButton> */}
 
         <SvgSquircleView
           style={{
-            width: WIDTH,
-            height: HEIGHT,
+            width,
+            height,
             marginTop: 20,
             justifyContent: "center",
             alignItems: "center",
           }}
           squircleParams={{
-            cornerSmoothing: CORNER_SMOOTHING / 100,
-            cornerRadius: CORNER_RADIUS,
+            cornerSmoothing: cornerSmoothing / 100,
+            cornerRadius: cornerRadius,
             fillColor: BACKGROUND_COLOR,
+            strokeWidth: borderWidth,
+            strokeColor: BORDER_COLOR,
           }}
         >
           <Text>react-native-figma-squircle</Text>
@@ -87,17 +178,19 @@ export default function App() {
 
         <View
           style={{
-            width: WIDTH,
-            height: HEIGHT,
+            width,
+            height,
             marginTop: 20,
             backgroundColor: BACKGROUND_COLOR,
-            borderRadius: CORNER_RADIUS,
+            borderRadius: cornerRadius,
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
+            borderColor: BORDER_COLOR,
+            borderWidth: borderWidth,
           }}
         >
-          <Text>DEFAULT VIEW</Text>
+          <Text>View</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
