@@ -1,12 +1,12 @@
-import ExpoSquircleView, { ExpoSquircleButtonView } from "./ExpoSquircleView";
+import { SquircleButton, SquircleView } from "./ExpoSquircleView";
 import {
-  ExpoSquircleViewProps,
-  ExpoSquircleButtonViewProps,
+  SquircleButtonProps,
+  SquircleViewProps,
 } from "./ExpoSquircleView.types";
 
 export {
-  ExpoSquircleView,
-  ExpoSquircleViewProps,
-  ExpoSquircleButtonView,
-  ExpoSquircleButtonViewProps,
+  SquircleButton,
+  SquircleView,
+  SquircleViewProps,
+  SquircleButtonProps,
 };

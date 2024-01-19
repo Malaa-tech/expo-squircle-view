@@ -6,8 +6,8 @@ import {
   View,
 } from "react-native";
 
-import { ExpoSquircleView, ExpoSquircleButtonView } from "expo-squircle-view";
-import { SquircleView } from "react-native-figma-squircle";
+import { SquircleButton, SquircleView } from "expo-squircle-view";
+import { SquircleView as SvgSquircleView } from "react-native-figma-squircle";
 import { getSvgPath } from "figma-squircle";
 
 export default function App() {
@@ -31,7 +31,7 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <ExpoSquircleView
+        <SquircleView
           backgroundColor={BACKGROUND_COLOR}
           borderWidth={BORDER_WIDTH}
           borderColor={BORDER_COLOR}
@@ -48,9 +48,9 @@ export default function App() {
           }}
         >
           <Text>Our component</Text>
-        </ExpoSquircleView>
+        </SquircleView>
 
-        <ExpoSquircleButtonView
+        <SquircleButton
          backgroundColor={BACKGROUND_COLOR}
          borderWidth={BORDER_WIDTH}
          borderColor={BORDER_COLOR}
@@ -66,9 +66,9 @@ export default function App() {
           }}
         >
           <Text>Our clickable component</Text>
-        </ExpoSquircleButtonView>
+        </SquircleButton>
 
-        <SquircleView
+        <SvgSquircleView
           style={{
             width: WIDTH,
             height: HEIGHT,
@@ -83,7 +83,7 @@ export default function App() {
           }}
         >
           <Text>react-native-figma-squircle</Text>
-        </SquircleView>
+        </SvgSquircleView>
 
         <View
           style={{
@@ -111,3 +111,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+// import { Text, View } from "react-native";
+// import { ExpoSquircleButtonView } from "expo-squircle-view";
+
+// export default function App() {
+//   return (
+//     <View
+//       style={{
+//         alignItems: "center",
+//         justifyContent: "center",
+//         flex: 1,
+//       }}
+//     >
+//       <ExpoSquircleButtonView
+//         backgroundColor={"pink"}
+//         borderWidth={4}
+//         borderColor={"gray"}
+//         borderRadius={40}
+//         cornerSmoothing={100} // 0-100
+//         preserveSmoothing={true} // false matches figma, true has more rounding
+//         style={{
+//           width: 200,
+//           height: 100,
+//           flexDirection: "row",
+//           justifyContent: "center",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Text>Squircle</Text>
+//       </ExpoSquircleButtonView>
+//     </View>
+//   );
+// }

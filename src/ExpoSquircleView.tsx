@@ -3,9 +3,9 @@ import * as React from "react";
 import { View, StyleSheet, TouchableOpacity, processColor } from "react-native";
 
 import {
-  ExpoSquircleButtonViewProps,
+  SquircleButtonProps,
+  SquircleViewProps,
   ExpoSquircleNativeViewProps,
-  ExpoSquircleViewProps,
 } from "./ExpoSquircleView.types";
 
 const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
@@ -13,7 +13,7 @@ const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
 
 const ExpoSquircleViewNativeWrapper = (
   props: React.PropsWithChildren<
-    ExpoSquircleViewProps | ExpoSquircleButtonViewProps
+  SquircleViewProps | SquircleButtonProps
   >
 ) => {
   const {
@@ -38,31 +38,10 @@ const ExpoSquircleViewNativeWrapper = (
   );
 };
 
-const ExpoSquircleView = (
-  props: React.PropsWithChildren<ExpoSquircleViewProps>
-) => {
-  const { style, children } = props;
 
-  return (
-    <View
-      {...props}
-      style={[
-        styles.container,
-        style,
-        {
-          borderWidth: undefined,
-          borderRadius: undefined,
-        },
-      ]}
-    >
-      <ExpoSquircleViewNativeWrapper {...props} />
-      {children}
-    </View>
-  );
-};
 
-export const ExpoSquircleButtonView = (
-  props: React.PropsWithChildren<ExpoSquircleButtonViewProps>
+export const SquircleButton = (
+  props: React.PropsWithChildren<SquircleButtonProps>
 ) => {
   const { style, children } = props;
 
@@ -84,7 +63,28 @@ export const ExpoSquircleButtonView = (
   );
 };
 
-export default ExpoSquircleView;
+export const SquircleView = (
+  props: React.PropsWithChildren<SquircleViewProps>
+) => {
+  const { style, children } = props;
+
+  return (
+    <View
+      {...props}
+      style={[
+        styles.container,
+        style,
+        {
+          borderWidth: undefined,
+          borderRadius: undefined,
+        },
+      ]}
+    >
+      <ExpoSquircleViewNativeWrapper {...props} />
+      {children}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: { backgroundColor: "transparent" },

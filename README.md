@@ -86,7 +86,7 @@ then do `npx pod-install`
 
 ```tsx | pure
 import { Text, View } from "react-native";
-import { ExpoSquircleView } from "expo-squircle-view";
+import { SquircleView } from "expo-squircle-view";
 
 export default function App() {
   return (
@@ -97,7 +97,7 @@ export default function App() {
         flex: 1,
       }}
     >
-      <ExpoSquircleView
+      <SquircleView
         backgroundColor={"pink"}
         borderWidth={4}
         borderColor={"gray"}
@@ -113,7 +113,7 @@ export default function App() {
         }}
       >
         <Text>Squircle</Text>
-      </ExpoSquircleView>
+      </SquircleView>
     </View>
   );
 }
@@ -121,15 +121,15 @@ export default function App() {
 
 ### Using as a Button
 
-import ExpoSquircleButtonView instead of ExpoSquircleView, and use it the same way as a TouchableOpacity
+import SquircleButton instead of SquircleView, and use it the same way as a TouchableOpacity
 
 ```tsx | pure
-import { ExpoSquircleButtonView } from "expo-squircle-view"; 
+import { SquircleButton } from "expo-squircle-view"; 
 
 ...
-  <ExpoSquircleButtonView>
+  <SquircleButton>
   ...
-  </ExpoSquircleButtonView>
+  </SquircleButton>
 ...
 
 ```

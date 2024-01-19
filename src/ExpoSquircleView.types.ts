@@ -18,13 +18,13 @@ export type ExpoSquircleNativeViewProps = {
 } & ViewProps &
   SquircleProps;
 
-export type ExpoSquircleViewProps = {
+export type SquircleViewProps = {
   backgroundColor?: ColorValue;
   borderColor?: ColorValue;
 } & ViewProps &
   SquircleProps;
 
-export type ExpoSquircleButtonViewProps = {
+export type SquircleButtonProps = {
   backgroundColor?: ColorValue;
   borderColor?: ColorValue;
 } & TouchableOpacityProps &

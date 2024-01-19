@@ -1,8 +1,16 @@
 import * as React from 'react';
 
-import { ExpoSquircleViewProps } from './ExpoSquircleView.types';
+import { SquircleButtonProps, SquircleViewProps } from './ExpoSquircleView.types';
 
-export default function ExpoSquircleView(props: ExpoSquircleViewProps) {
+export function SquircleView(props: SquircleViewProps) {
+  return (
+    <div>
+    </div>
+  );
+}
+
+
+export function SquircleButton(props: SquircleButtonProps) {
   return (
     <div>
     </div>
