@@ -3,7 +3,7 @@
 A native implementation for figma corner smoothing (Squircle Shape) for react native expo apps
 
 <p align="center">
-<img width="498" alt="Screenshot 2024-01-18 at 6 37 42 PM" src="https://github.com/Malaa-tech/expo-squircle-view/assets/24798045/3a0f2d19-c113-43df-8f98-bee2f9694dc7">
+<img width="830" alt="Screenshot 2024-01-19 at 3 55 14 PM" src="https://github.com/Malaa-tech/expo-squircle-view/assets/24798045/1c403119-11bc-49c0-9310-d8211ae6b020">
 </p>
 
 
@@ -26,6 +26,12 @@ then do
 npm install expo-squircle-view
 ```
 then do `npx pod-install`
+
+
+# Running Example
+<p align="center">
+<img width="300" src="https://github.com/Malaa-tech/expo-squircle-view/assets/24798045/4157ad73-cf18-45ea-b130-379bd33635f0">
+</p>
 
 
 ### Props (All props are optional)
@@ -69,13 +75,13 @@ then do `npx pod-install`
   </tr>
     <tr>
     <td><code>preserveSmoothing</code></td>
-    <td><code>boolean<code></td>
+    <td><code>boolean</code></td>
     <td>Setting this value to <code>false</code> the produced squircle will match the figma shape exactly, setting this to <code>false</code> will give you even more smoothing for higher <code>borderRadius</code> values</td>
     <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>style</code></td>
-    <td><code>StyleProp<ViewStyle><code></td>
+    <td><code>StyleProp<ViewStyle></code></td>
     <td>Default style prop for the component, like any other view</td>
     <td><code>undefined</code></td>
   </tr>
