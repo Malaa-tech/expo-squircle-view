@@ -32,7 +32,17 @@ class ExpoSquircleView: ExpoView {
         let width: CGFloat = bounds.width
         let height: CGFloat = bounds.height
         
-        return SquirclePath.create(width: width, height: height, radius: radius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing, borderWidth: squircleLayer.lineWidth);
+        let path = SquirclePath.create(width: width - squircleLayer.lineWidth, height: height - squircleLayer.lineWidth, radius: radius, cornerSmoothing: cornerSmoothing, preserveSmoothing: preserveSmoothing);
+        
+        // if borderWidth is greater than 0, we need to shift the shape
+        // to match the original width & height
+        var translationTransform = CGAffineTransform(translationX: squircleLayer.lineWidth / 2, y: squircleLayer.lineWidth / 2)
+        
+        if let translatedPath = path.copy(using: &translationTransform) {
+            return translatedPath
+        }
+        
+        return path
     }
     
     func setBackgroundColor(_ backgroundColor: UIColor) {

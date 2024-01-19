@@ -3,6 +3,7 @@ package expo.modules.squircleview
 import SquirclePath
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Path
 import expo.modules.kotlin.AppContext
@@ -51,17 +52,29 @@ class ExpoSquircleView(context: Context, appContext: AppContext) : ExpoView(cont
             return
         }
 
-        val newPath = SquirclePath(
-            width,
-            height,
+        val pixelBorderWidth = Utils.convertDpToPixel(this.borderWidth, context);
+
+        val squirclePath = SquirclePath(
+            width - pixelBorderWidth,
+            height - pixelBorderWidth,
             borderRadius,
             cornerSmoothing / 100f,
-            preserveSmoothing,
-            borderWidth = Utils.convertDpToPixel(this.borderWidth, context)
+            preserveSmoothing
         )
 
+        // if borderWidth is greater than 0, we need to shift the shape
+        // to match the original width & height
+        val shiftX = pixelBorderWidth / 2f
+        val shiftY = pixelBorderWidth / 2f
+        val translationMatrix = Matrix().apply {
+            setTranslate(shiftX, shiftY)
+        }
+        val translatedPath = Path().apply {
+            squirclePath.transform(translationMatrix, this)
+        }
+
         path.reset()
-        path.addPath(newPath)
+        path.addPath(translatedPath)
     }
 
     fun setCornerSmoothing(c: Int) {

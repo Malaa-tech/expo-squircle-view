@@ -23,40 +23,28 @@ class SquirclePath(
     private var borderRadius: Float,
     private var cornerSmoothing: Float,
     private var preserveSmoothing: Boolean,
-    private var borderWidth: Float
 ) : Path() {
 
     init {
-        val checkedRadius = minOf(this.borderRadius, (this.width - this.borderWidth) / 2f, (this.height - this.borderWidth) / 2f)
+        val checkedRadius = minOf(this.borderRadius, this.width / 2f, this.height / 2f)
         val checkedCornerSmoothing = maxOf(minOf(this.cornerSmoothing, 1f),0f)
 
         val curvedProperties = calculateCurveProperties(
             checkedRadius,
             checkedCornerSmoothing,
             this.preserveSmoothing,
-            min(this.width - this.borderWidth / 2, this.height - this.borderWidth / 2) / 2
+            min(this.width , this.height) / 2
         );
         val path =
             PathParser.createPathFromPathData(
                 getSVGPathFromPathParams(
-                    this.width - this.borderWidth,
-                    this.height - this.borderWidth,
+                    this.width,
+                    this.height,
                     curvedProperties
                 )
             )
 
-        // if borderWidth is greater than 0, we need to shift the shape
-        // to match the original width & height
-        val shiftX = borderWidth / 2f
-        val shiftY = borderWidth / 2f
-        val translationMatrix = Matrix().apply {
-            setTranslate(shiftX, shiftY)
-        }
-        val translatedPath = Path().apply {
-            path.transform(translationMatrix, this)
-        }
-
-        this.addPath(translatedPath)
+        this.addPath(path)
     }
 
 
