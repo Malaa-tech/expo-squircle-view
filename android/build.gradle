@@ -54,17 +54,17 @@ android {
   compileSdkVersion safeExtGet("compileSdkVersion", 33)
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_11
-    targetCompatibility JavaVersion.VERSION_11
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
   }
 
   kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_11.majorVersion
+    jvmTarget = JavaVersion.VERSION_17.majorVersion
   }
 
   namespace "expo.modules.squircleview"
   defaultConfig {
-    minSdkVersion safeExtGet("minSdkVersion", 21)
+    minSdkVersion safeExtGet("minSdkVersion", 23)
     targetSdkVersion safeExtGet("targetSdkVersion", 33)
     versionCode 1
     versionName "0.1.0"
