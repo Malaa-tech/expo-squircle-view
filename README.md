@@ -104,10 +104,6 @@ export default function App() {
       }}
     >
       <SquircleView
-        backgroundColor={"pink"}
-        borderWidth={4}
-        borderColor={"gray"}
-        borderRadius={40}
         cornerSmoothing={100} // 0-100
         preserveSmoothing={true} // false matches figma, true has more rounding
         style={{
@@ -116,6 +112,10 @@ export default function App() {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "pink",
+          borderRadius: 40,
+          borderColor: "gray",
+          borderWith: 4
         }}
       >
         <Text>Squircle</Text>
