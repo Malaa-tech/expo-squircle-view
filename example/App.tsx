@@ -109,14 +109,8 @@ export default function App() {
         </View>
 
         <SquircleView
-          // backgroundColor={BACKGROUND_COLOR}
-          borderWidth={borderWidth}
-          borderColor={BORDER_COLOR}
-          borderRadius={cornerRadius}
           cornerSmoothing={cornerSmoothing}
           preserveSmoothing={PRESERVE_SMOOTHING}
-          backgroundColor={BACKGROUND_COLOR}
-          // enabledIOSAnimation
           style={{
             marginTop: 20,
             width,
@@ -124,6 +118,10 @@ export default function App() {
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: BACKGROUND_COLOR,
+            borderColor: BORDER_COLOR,
+            borderRadius: cornerRadius,
+            borderWidth: borderWidth,
           }}
         >
           <Text>Squircle</Text>

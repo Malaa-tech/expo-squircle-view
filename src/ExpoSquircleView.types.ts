@@ -1,4 +1,5 @@
 import {
+  AnimatableNumericValue,
   ColorValue,
   TouchableOpacityProps,
   ViewProps,
@@ -7,7 +8,7 @@ import {
 
 type SquircleProps = {
   cornerSmoothing?: number;
-  borderRadius?: number;
+  borderRadius?: AnimatableNumericValue;
   borderWidth?: number;
   preserveSmoothing?: boolean;
   enabledIOSAnimation?: boolean;

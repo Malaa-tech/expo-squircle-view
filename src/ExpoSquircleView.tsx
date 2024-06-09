@@ -1,6 +1,13 @@
 import { requireNativeViewManager } from "expo-modules-core";
 import * as React from "react";
-import { View, StyleSheet, TouchableOpacity, processColor } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  processColor,
+  ViewProps,
+  ViewStyle,
+} from "react-native";
 
 import {
   SquircleButtonProps,
@@ -12,9 +19,7 @@ const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
   requireNativeViewManager("ExpoSquircleView");
 
 const ExpoSquircleViewNativeWrapper = (
-  props: React.PropsWithChildren<
-  SquircleViewProps | SquircleButtonProps
-  >
+  props: React.PropsWithChildren<SquircleViewProps | SquircleButtonProps>
 ) => {
   const {
     cornerSmoothing = 100,
@@ -23,7 +28,7 @@ const ExpoSquircleViewNativeWrapper = (
     borderColor = "transparent",
     borderWidth = 0,
     preserveSmoothing = false,
-    enabledIOSAnimation = false
+    enabledIOSAnimation = false,
   } = props;
 
   return (
@@ -43,47 +48,77 @@ const ExpoSquircleViewNativeWrapper = (
 export const SquircleButton = (
   props: React.PropsWithChildren<SquircleButtonProps>
 ) => {
-  const { style, children } = props;
+  const { children } = props;
+  const {squircleProps, wrapperStyle} = useSquircleProps(props);
 
   return (
     <TouchableOpacity
       {...props}
-      style={[
-        styles.container,
-        style,
-        {
-          borderWidth: undefined,
-          borderRadius: undefined,
-        },
-      ]}
+      style={wrapperStyle}
     >
-      <ExpoSquircleViewNativeWrapper {...props} />
+      <ExpoSquircleViewNativeWrapper
+        {...squircleProps}
+      />
       {children}
     </TouchableOpacity>
   );
 };
 
-export const SquircleView = (
-  props: React.PropsWithChildren<SquircleViewProps>
-) => {
-  const { style, children } = props;
+export const SquircleView = (props: ViewProps & SquircleViewProps) => {
+  const { children } = props;
+  const {squircleProps, wrapperStyle} = useSquircleProps(props);
 
   return (
     <View
       {...props}
-      style={[
-        styles.container,
-        style,
-        {
-          borderWidth: undefined,
-          borderRadius: undefined,
-        },
-      ]}
+      style={wrapperStyle}
     >
-      <ExpoSquircleViewNativeWrapper {...props} />
+      <ExpoSquircleViewNativeWrapper
+        {...squircleProps}
+      />
       {children}
     </View>
   );
+};
+
+
+const useSquircleProps = (
+  props: SquircleViewProps | SquircleButtonProps
+) => {
+  const style = props.style as ViewStyle | undefined;
+
+  const {
+    cornerSmoothing,
+    borderRadius,
+    borderWidth,
+    backgroundColor,
+    borderColor,
+  } = props;
+
+  return {
+    squircleProps: {
+      ...props,
+      borderRadius: borderRadius || style?.borderRadius || 0,
+      borderWidth: borderWidth || style?.borderWidth || 0,
+      backgroundColor:
+        backgroundColor || style?.backgroundColor || "transparent",
+      borderColor: borderColor || style?.borderColor || "transparent",
+      cornerSmoothing: cornerSmoothing || 100,
+      preserveSmoothing: props.preserveSmoothing || false,
+      enabledIOSAnimation: props.enabledIOSAnimation || false,
+    },
+    wrapperStyle: [
+      styles.container,
+      style,
+      {
+        // remove styles from wrapper
+        borderWidth: undefined,
+        borderRadius: undefined,
+        borderColor: undefined,
+        backgroundColor: undefined,
+      },
+    ],
+  };
 };
 
 const styles = StyleSheet.create({
