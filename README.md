@@ -44,7 +44,7 @@ then do `npx pod-install`
     <th>Default Value</th>
   </td>
   <tr>
-    <td><code>borderRadius</code></td>
+    <td><code>borderRadius or style.borderRadius</code></td>
     <td><code>number</code></td>
     <td>The component's border radius</td>
     <td><code>0</code></td>
@@ -56,19 +56,19 @@ then do `npx pod-install`
     <td><code>0</code></td>
   </tr>
    <tr>
-    <td><code>backgroundColor</code></td>
+    <td><code>backgroundColor or style.backgroundColor</code></td>
     <td><code>ColorValue</code></td>
     <td>The background color of the component</td>
     <td><code>transperent</code></td>
   </tr>
    <tr>
-    <td><code>borderColor</code></td>
+    <td><code>borderColor or style.borderColor</code></td>
     <td><code>ColorValue</code></td>
     <td>Since borders has to match the squircle, you won't be able to set it using the <code>style</code> prop, so use this prop instead</td>
     <td><code>transperent</code></td>
   </tr>
    <tr>
-    <td><code>borderWidth</code></td>
+    <td><code>borderWidth or style.borderWidth</code></td>
     <td><code>number</code></td>
     <td>Since borders has to match the squircle, you won't be able to set it using the <code>style</code> prop, so use this prop instead</td>
     <td><code>0</code></td>
