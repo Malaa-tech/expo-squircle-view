@@ -19,7 +19,7 @@ PODS:
     - React-NativeModulesApple
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
-  - ExpoSquircleView (0.3.1):
+  - ExpoSquircleView (0.3.4):
     - ExpoModulesCore
     - PocketSVG (~> 2.7.3)
   - EXSplashScreen (0.20.5):
@@ -627,7 +627,7 @@ SPEC CHECKSUMS:
   Expo: 61a8e1aa94311557c137c0a4dfd4fe78281cfbb4
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoModulesCore: c480fd4e3c7c8e81f0a6ba3a7c56869f25fe016d
-  ExpoSquircleView: f470a533fd6dddd46f6bcbbb09e7da673cd143d5
+  ExpoSquircleView: 6587f0ddd4a3ee78f4f560a30562e3ba76e8e9eb
   EXSplashScreen: c0e7f2d4a640f3b875808ed0b88575538daf6d82
   FBLazyVector: 748c0ef74f2bf4b36cfcccf37916806940a64c32
   FBReactNativeSpec: 966f29e4e697de53a3b366355e8f57375c856ad9
@@ -674,4 +674,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 3c73e34961c44ac71ffa4026ea637303e06cc73b
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3
