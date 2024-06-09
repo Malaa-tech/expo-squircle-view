@@ -1,8 +1,7 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { SquircleButton, SquircleView } from "expo-squircle-view";
+import { SquircleView } from "expo-squircle-view";
 import { SquircleView as SvgSquircleView } from "react-native-figma-squircle";
-import { getSvgPath } from "figma-squircle";
 import { Slider } from "@miblanchard/react-native-slider";
 import React from "react";
 
@@ -22,15 +21,6 @@ export default function App() {
   const [cornerSmoothing, setCornerSmoothing] =
     React.useState(CORNER_SMOOTHING);
   const [borderWidth, setBorderWidth] = React.useState(BORDER_WIDTH);
-
-  // console.log(
-  //   getSvgPath({
-  //     height: HEIGHT,
-  //     width: WIDTH,
-  //     cornerRadius: CORNER_RADIUS,
-  //     cornerSmoothing: CORNER_SMOOTHING / 100,
-  //   })
-  // );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -204,36 +194,3 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
-// import { Text, View } from "react-native";
-// import { ExpoSquircleButtonView } from "expo-squircle-view";
-
-// export default function App() {
-//   return (
-//     <View
-//       style={{
-//         alignItems: "center",
-//         justifyContent: "center",
-//         flex: 1,
-//       }}
-//     >
-//       <ExpoSquircleButtonView
-//         backgroundColor={"pink"}
-//         borderWidth={4}
-//         borderColor={"gray"}
-//         borderRadius={40}
-//         cornerSmoothing={100} // 0-100
-//         preserveSmoothing={true} // false matches figma, true has more rounding
-//         style={{
-//           width: 200,
-//           height: 100,
-//           flexDirection: "row",
-//           justifyContent: "center",
-//           alignItems: "center",
-//         }}
-//       >
-//         <Text>Squircle</Text>
-//       </ExpoSquircleButtonView>
-//     </View>
-//   );
-// }
