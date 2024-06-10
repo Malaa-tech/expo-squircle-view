@@ -44,40 +44,40 @@ then do `npx pod-install`
     <th>Default Value</th>
   </td>
   <tr>
-    <td><code>borderRadius or style.borderRadius</code></td>
-    <td><code>number</code></td>
-    <td>The component's border radius</td>
-    <td><code>0</code></td>
-  </tr>
-  <tr>
     <td><code>cornerSmoothing</code></td>
     <td><code>number</code></td>
     <td>Controls the amount of smoothing for the radius, <code>0</code> means there is no smoothing (will render like any other <code>View</code>, 100 is maximum amount</td>
     <td><code>0</code></td>
   </tr>
-   <tr>
-    <td><code>backgroundColor or style.backgroundColor</code></td>
-    <td><code>ColorValue</code></td>
-    <td>The background color of the component</td>
-    <td><code>transperent</code></td>
-  </tr>
-   <tr>
-    <td><code>borderColor or style.borderColor</code></td>
-    <td><code>ColorValue</code></td>
-    <td>Since borders has to match the squircle, you won't be able to set it using the <code>style</code> prop, so use this prop instead</td>
-    <td><code>transperent</code></td>
-  </tr>
-   <tr>
-    <td><code>borderWidth or style.borderWidth</code></td>
-    <td><code>number</code></td>
-    <td>Since borders has to match the squircle, you won't be able to set it using the <code>style</code> prop, so use this prop instead</td>
-    <td><code>0</code></td>
-  </tr>
-    <tr>
+  <tr>
     <td><code>preserveSmoothing</code></td>
     <td><code>boolean</code></td>
     <td>Setting this value to <code>false</code> the produced squircle will match the figma shape exactly, setting this to <code>false</code> will give you even more smoothing for higher <code>borderRadius</code> values</td>
     <td><code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>borderRadius</code> or <code>style.borderRadius</code></td>
+    <td><code>number</code></td>
+    <td>The component's border radius, you can either set it directly or set it from borderRadius like any other view</td>
+    <td><code>0</code></td>
+  </tr>
+   <tr>
+    <td><code>backgroundColor</code> or <code>style.backgroundColor</code></td>
+    <td><code>ColorValue</code></td>
+    <td>The background color of the component, you can either set it directly or set it from style.backgroundColor like any other view</td>
+    <td><code>transperent</code></td>
+  </tr>
+   <tr>
+    <td><code>borderColor</code> or <code>style.borderColor</code></td>
+    <td><code>ColorValue</code></td>
+    <td>Since borders has to match the squircle, you can either set it directly or set it from style.borderColor like any other view</td>
+    <td><code>transperent</code></td>
+  </tr>
+   <tr>
+    <td><code>borderWidth</code> or <code>style.borderWidth</code></td>
+    <td><code>number</code></td>
+    <td>Since borders has to match the squircle, you can either set it directly or set it from style.borderWith like any other view</td>
+    <td><code>0</code></td>
   </tr>
   <tr>
     <td><code>style</code></td>
@@ -104,10 +104,6 @@ export default function App() {
       }}
     >
       <SquircleView
-        backgroundColor={"pink"}
-        borderWidth={4}
-        borderColor={"gray"}
-        borderRadius={40}
         cornerSmoothing={100} // 0-100
         preserveSmoothing={true} // false matches figma, true has more rounding
         style={{
@@ -116,6 +112,10 @@ export default function App() {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "pink",
+          borderRadius: 40,
+          borderColor: "gray",
+          borderWith: 4
         }}
       >
         <Text>Squircle</Text>
