@@ -85,7 +85,7 @@ export const SquircleView = (props: ViewProps & SquircleViewProps) => {
 const useSquircleProps = (
   props: SquircleViewProps | SquircleButtonProps
 ) => {
-  const style = props.style as ViewStyle | undefined;
+  const style = props.style ? StyleSheet.flatten(props.style) : undefined;
 
   const {
     cornerSmoothing,
