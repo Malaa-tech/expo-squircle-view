@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   processColor,
   ViewProps,
-  ViewStyle,
+  DimensionValue,
 } from "react-native";
 
 import {
@@ -49,7 +49,7 @@ export const SquircleButton = (
   props: React.PropsWithChildren<SquircleButtonProps>
 ) => {
   const { children } = props;
-  const {squircleProps, wrapperStyle} = useSquircleProps(props);
+  const { squircleProps, wrapperStyle } = useSquircleProps(props);
 
   return (
     <TouchableOpacity
@@ -66,7 +66,7 @@ export const SquircleButton = (
 
 export const SquircleView = (props: ViewProps & SquircleViewProps) => {
   const { children } = props;
-  const {squircleProps, wrapperStyle} = useSquircleProps(props);
+  const { squircleProps, wrapperStyle } = useSquircleProps(props);
 
   return (
     <View
@@ -81,7 +81,6 @@ export const SquircleView = (props: ViewProps & SquircleViewProps) => {
   );
 };
 
-
 const useSquircleProps = (
   props: SquircleViewProps | SquircleButtonProps
 ) => {
@@ -94,6 +93,41 @@ const useSquircleProps = (
     backgroundColor,
     borderColor,
   } = props;
+
+  const { 
+    padding,
+    paddingVertical, 
+    paddingHorizontal, 
+    paddingBottom,
+    paddingEnd,
+    paddingLeft,
+    paddingRight,
+    paddingStart, 
+    paddingTop 
+  } = style || {};
+
+  const calculatedPayment = React.useMemo(() => {
+    const extraPadding = borderWidth || style?.borderWidth || 0;
+
+    const calculatePadding = (_paddingValue: DimensionValue) => {
+      if (typeof _paddingValue === "number") {
+        return _paddingValue + extraPadding;
+      }
+      return _paddingValue;
+    };
+
+    return {
+      padding: padding ? calculatePadding(padding) : extraPadding,
+      paddingVertical: paddingVertical ? calculatePadding(paddingVertical) : undefined,
+      paddingHorizontal: paddingHorizontal ? calculatePadding(paddingHorizontal) : undefined,
+      paddingBottom: paddingBottom ? calculatePadding(paddingBottom) : undefined,
+      paddingEnd: paddingEnd ? calculatePadding(paddingEnd) : undefined,
+      paddingLeft: paddingLeft ? calculatePadding(paddingLeft) : undefined,
+      paddingRight: paddingRight ? calculatePadding(paddingRight) : undefined,
+      paddingStart: paddingStart ? calculatePadding(paddingStart) : undefined,
+      paddingTop: paddingTop ? calculatePadding(paddingTop) : undefined,
+    }
+  }, [style, borderWidth])
 
   return {
     squircleProps: {
@@ -116,6 +150,7 @@ const useSquircleProps = (
         borderRadius: undefined,
         borderColor: undefined,
         backgroundColor: undefined,
+        ...calculatedPayment
       },
     ],
   };

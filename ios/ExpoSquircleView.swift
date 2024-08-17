@@ -64,6 +64,7 @@ class ExpoSquircleView: ExpoView {
         CATransaction.setDisableActions(!isAnimationEnabled)
         squircleLayer.lineWidth = borderRadius
         CATransaction.commit()
+        setNeedsLayout()
     }
     
     func setCornerSmoothing(_ cornerSmoothing: CGFloat) {
