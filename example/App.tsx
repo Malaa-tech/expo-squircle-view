@@ -122,27 +122,27 @@ export default function App() {
           </View>
         </View>
 
-        <SquircleView
-          cornerSmoothing={cornerSmoothing}
-          preserveSmoothing={PRESERVE_SMOOTHING}
-          style={{
-            marginTop: 20,
-            width,
-            height,
-            padding,
-            paddingHorizontal: 0,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: BACKGROUND_COLOR,
-            borderColor: BORDER_COLOR,
-            borderRadius: cornerRadius,
-            borderWidth: borderWidth,
-          }}
-        >
-          <Text>Squircle</Text>
-          <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
-        </SquircleView>
+        <View style={{marginVertical: 20}}>
+          <SquircleView
+            cornerSmoothing={cornerSmoothing}
+            preserveSmoothing={PRESERVE_SMOOTHING}
+            style={{
+              width,
+              height,
+              padding,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: BACKGROUND_COLOR,
+              borderColor: BORDER_COLOR,
+              borderRadius: cornerRadius,
+              borderWidth: borderWidth,
+            }}
+          >
+            <Text>Squircle</Text>
+            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
+          </SquircleView>
+        </View>
 
         {/* <SquircleButton
           backgroundColor={BACKGROUND_COLOR}
@@ -181,23 +181,24 @@ export default function App() {
           <Text>react-native-figma-squircle</Text>
         </SvgSquircleView> */}
 
-        <View
-          style={{
-            width,
-            height,
-            marginTop: 20,
-            backgroundColor: BACKGROUND_COLOR,
-            borderRadius: cornerRadius,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            borderColor: BORDER_COLOR,
-            borderWidth: borderWidth,
-            padding,
-          }}
-        >
-          <Text>Squircle</Text>
-          <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
+        <View style={{marginVertical: 20}}>
+          <View
+            style={{
+              width,
+              height,
+              backgroundColor: BACKGROUND_COLOR,
+              borderRadius: cornerRadius,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              borderColor: BORDER_COLOR,
+              borderWidth: borderWidth,
+              padding,
+            }}
+          >
+            <Text>View</Text>
+            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
