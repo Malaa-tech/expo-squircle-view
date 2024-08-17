@@ -6,13 +6,13 @@ import { Slider } from "@miblanchard/react-native-slider";
 import React from "react";
 
 export default function App() {
-  const WIDTH = 380;
+  const WIDTH = 390;
   const HEIGHT = 100;
   const CORNER_RADIUS = 40;
   const CORNER_SMOOTHING = 100;
   const BORDER_WIDTH = 4;
   const BORDER_COLOR = "gray";
-  const BACKGROUND_COLOR = "white";
+  const BACKGROUND_COLOR = "red";
   const PRESERVE_SMOOTHING = true;
 
   const [width, setWidth] = React.useState(WIDTH);
@@ -21,6 +21,7 @@ export default function App() {
   const [cornerSmoothing, setCornerSmoothing] =
     React.useState(CORNER_SMOOTHING);
   const [borderWidth, setBorderWidth] = React.useState(BORDER_WIDTH);
+  const [padding, setPadding] = React.useState(0);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -28,7 +29,7 @@ export default function App() {
         <View
           style={{
             width: "100%",
-            height: 200,
+            height: 300,
             flexDirection: "row",
             paddingHorizontal: 10,
             gap: 12,
@@ -41,6 +42,7 @@ export default function App() {
             <Text>Width</Text>
             <Text>Height</Text>
             <Text>Border Width</Text>
+            <Text>Padding</Text>
           </View>
           <View
             style={{ height: "100%", justifyContent: "space-between", flex: 1 }}
@@ -105,6 +107,18 @@ export default function App() {
               minimumTrackTintColor={"black"}
               maximumTrackTintColor={"gray"}
             />
+            <Slider
+              value={padding}
+              onValueChange={(value) => {
+                setPadding(value[0]);
+              }}
+              minimumValue={0}
+              maximumValue={100}
+              step={1}
+              animateTransitions
+              minimumTrackTintColor={"black"}
+              maximumTrackTintColor={"gray"}
+            />
           </View>
         </View>
 
@@ -115,7 +129,9 @@ export default function App() {
             marginTop: 20,
             width,
             height,
-            flexDirection: "row",
+            padding,
+            paddingHorizontal: 0,
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: BACKGROUND_COLOR,
@@ -125,6 +141,7 @@ export default function App() {
           }}
         >
           <Text>Squircle</Text>
+          <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
         </SquircleView>
 
         {/* <SquircleButton
@@ -145,7 +162,7 @@ export default function App() {
           <Text>ExpoSquircleButton</Text>
         </SquircleButton> */}
 
-        <SvgSquircleView
+        {/* <SvgSquircleView
           style={{
             width,
             height,
@@ -162,7 +179,7 @@ export default function App() {
           }}
         >
           <Text>react-native-figma-squircle</Text>
-        </SvgSquircleView>
+        </SvgSquircleView> */}
 
         <View
           style={{
@@ -171,14 +188,16 @@ export default function App() {
             marginTop: 20,
             backgroundColor: BACKGROUND_COLOR,
             borderRadius: cornerRadius,
-            flexDirection: "row",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             borderColor: BORDER_COLOR,
             borderWidth: borderWidth,
+            padding,
           }}
         >
-          <Text>View</Text>
+          <Text>Squircle</Text>
+          <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
         </View>
       </ScrollView>
     </SafeAreaView>
