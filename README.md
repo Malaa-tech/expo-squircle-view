@@ -79,6 +79,12 @@ then do `npx pod-install`
     <td>Since borders has to match the squircle, you can either set it directly or set it from style.borderWith like any other view</td>
     <td><code>0</code></td>
   </tr>
+   <tr>
+    <td><code>ignoreBorderWidthFromPadding</code></td>
+    <td><code>boolean<ViewStyle></code></td>
+    <td>We introduced a breaking change in 0.6.0, if you want your styles to work the same as pre 0.6, enable this. when value is `false` the style will match react-native View behavior, when `true` it will ignore border width from affecting the padding of the content</td>
+    <td><code>false</code></td>
+  </tr>
   <tr>
     <td><code>style</code></td>
     <td><code>StyleProp<ViewStyle></code></td>

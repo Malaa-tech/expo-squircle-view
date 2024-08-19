@@ -1,7 +1,6 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { SquircleView } from "expo-squircle-view";
-import { SquircleView as SvgSquircleView } from "react-native-figma-squircle";
 import { Slider } from "@miblanchard/react-native-slider";
 import React from "react";
 

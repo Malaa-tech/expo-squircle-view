@@ -92,6 +92,7 @@ const useSquircleProps = (
     borderWidth,
     backgroundColor,
     borderColor,
+    ignoreBorderWidthFromPadding,
   } = props;
 
   const { 
@@ -106,7 +107,7 @@ const useSquircleProps = (
     paddingTop 
   } = style || {};
 
-  const calculatedPayment = React.useMemo(() => {
+  const calculatedPadding = React.useMemo(() => {
     const extraPadding = borderWidth || style?.borderWidth || 0;
 
     const calculatePadding = (_paddingValue: DimensionValue) => {
@@ -150,7 +151,7 @@ const useSquircleProps = (
         borderRadius: undefined,
         borderColor: undefined,
         backgroundColor: undefined,
-        ...calculatedPayment
+        ...(ignoreBorderWidthFromPadding === true ? undefined: calculatedPadding)
       },
     ],
   };
