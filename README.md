@@ -47,7 +47,7 @@ then do `npx pod-install`
     <td><code>cornerSmoothing</code></td>
     <td><code>number</code></td>
     <td>Controls the amount of smoothing for the radius, <code>0</code> means there is no smoothing (will render like any other <code>View</code>, 100 is maximum amount</td>
-    <td><code>0</code></td>
+    <td><code>100</code></td>
   </tr>
   <tr>
     <td><code>preserveSmoothing</code></td>
