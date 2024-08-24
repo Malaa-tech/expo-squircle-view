@@ -148,7 +148,6 @@ const useSquircleProps = (
       {
         // remove styles from wrapper
         borderWidth: undefined,
-        borderRadius: undefined,
         borderColor: undefined,
         backgroundColor: undefined,
         ...(ignoreBorderWidthFromPadding === true ? undefined: calculatedPadding)

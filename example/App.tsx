@@ -121,7 +121,7 @@ export default function App() {
           </View>
         </View>
 
-        <View style={{marginVertical: 20}}>
+        <View style={{ marginVertical: 20 }}>
           <SquircleView
             cornerSmoothing={cornerSmoothing}
             preserveSmoothing={PRESERVE_SMOOTHING}
@@ -136,10 +136,12 @@ export default function App() {
               borderColor: BORDER_COLOR,
               borderRadius: cornerRadius,
               borderWidth: borderWidth,
+              overflow: 'hidden',
             }}
           >
             <Text>Squircle</Text>
-            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
+            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%' }} />
+            <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} />
           </SquircleView>
         </View>
 
@@ -180,7 +182,7 @@ export default function App() {
           <Text>react-native-figma-squircle</Text>
         </SvgSquircleView> */}
 
-        <View style={{marginVertical: 20}}>
+        <View style={{ marginVertical: 20 }}>
           <View
             style={{
               width,
@@ -193,10 +195,12 @@ export default function App() {
               borderColor: BORDER_COLOR,
               borderWidth: borderWidth,
               padding,
+              overflow: 'hidden'
             }}
           >
             <Text>View</Text>
-            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%'}} />
+            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%' }} />
+            <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} />
           </View>
         </View>
       </ScrollView>
