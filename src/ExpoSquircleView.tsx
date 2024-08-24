@@ -33,11 +33,11 @@ const ExpoSquircleViewNativeWrapper = (
 
   return (
     <NativeView
-      backgroundColor={processColor(backgroundColor)}
-      borderColor={processColor(borderColor)}
+      squircleBackgroundColor={processColor(backgroundColor)}
+      squircleBorderColor={processColor(borderColor)}
+      squircleBorderWidth={borderWidth}
       borderRadius={borderRadius}
       cornerSmoothing={cornerSmoothing}
-      borderWidth={borderWidth}
       preserveSmoothing={preserveSmoothing}
       enabledIOSAnimation={enabledIOSAnimation}
       style={StyleSheet.absoluteFill}
