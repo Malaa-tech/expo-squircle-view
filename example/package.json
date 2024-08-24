@@ -11,6 +11,7 @@
   "dependencies": {
     "@miblanchard/react-native-slider": "^2.3.1",
     "expo": "~51.0.11",
+    "expo-build-properties": "~0.12.5",
     "expo-dev-client": "~4.0.23",
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
