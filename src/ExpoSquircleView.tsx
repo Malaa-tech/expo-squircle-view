@@ -33,11 +33,11 @@ const ExpoSquircleViewNativeWrapper = (
 
   return (
     <NativeView
-      backgroundColor={processColor(backgroundColor)}
-      borderColor={processColor(borderColor)}
+      squircleBackgroundColor={processColor(backgroundColor)}
+      squircleBorderColor={processColor(borderColor)}
+      squircleBorderWidth={borderWidth}
       borderRadius={borderRadius}
       cornerSmoothing={cornerSmoothing}
-      borderWidth={borderWidth}
       preserveSmoothing={preserveSmoothing}
       enabledIOSAnimation={enabledIOSAnimation}
       style={StyleSheet.absoluteFill}
@@ -138,7 +138,7 @@ const useSquircleProps = (
       backgroundColor:
         backgroundColor || style?.backgroundColor || "transparent",
       borderColor: borderColor || style?.borderColor || "transparent",
-      cornerSmoothing: cornerSmoothing || 100,
+      cornerSmoothing: cornerSmoothing !== undefined ? cornerSmoothing : 100,
       preserveSmoothing: props.preserveSmoothing || false,
       enabledIOSAnimation: props.enabledIOSAnimation || false,
     },
@@ -148,7 +148,6 @@ const useSquircleProps = (
       {
         // remove styles from wrapper
         borderWidth: undefined,
-        borderRadius: undefined,
         borderColor: undefined,
         backgroundColor: undefined,
         ...(ignoreBorderWidthFromPadding === true ? undefined: calculatedPadding)

@@ -5,13 +5,13 @@ public class ExpoSquircleViewModule: Module {
         Name("ExpoSquircleView")
         
         View(ExpoSquircleView.self) { 
-            Prop("backgroundColor") { (view: ExpoSquircleView, prop: UIColor) in
+            Prop("squircleBackgroundColor") { (view: ExpoSquircleView, prop: UIColor) in
                 view.setBackgroundColor(prop)
             }
-            Prop("borderColor") { (view: ExpoSquircleView, prop: UIColor) in
+            Prop("squircleBorderColor") { (view: ExpoSquircleView, prop: UIColor) in
                 view.setBorderColor(prop)
             }
-            Prop("borderWidth") { (view: ExpoSquircleView, prop: Float) in
+            Prop("squircleBorderWidth") { (view: ExpoSquircleView, prop: Float) in
                 view.setBorderWidth(CGFloat(prop))
             }
             Prop("borderRadius") { (view: ExpoSquircleView, prop: Float) in
