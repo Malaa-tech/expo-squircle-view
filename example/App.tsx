@@ -156,7 +156,7 @@ export default function App() {
           >
             <Text>Squircle</Text>
             <View style={{ backgroundColor: 'yellow', height: 20, width: '100%' }} />
-            <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} />
+            {/* <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} /> */}
           </SquircleView>
         </View>
 
@@ -199,7 +199,7 @@ export default function App() {
 
 
         {/* Reanimated Testing */}
-        <Button title="change style" onPress={() => {
+        {/* <Button title="change style" onPress={() => {
           widthSV.value = withTiming(widthSV.value > 250 ? 200 : 390, { duration: 300 });
           scaleSV.value = withTiming(scaleSV.value > 1 ? 0.8 : 1.1, { duration: 300 });
         }} />
@@ -225,7 +225,7 @@ export default function App() {
             <View style={{ backgroundColor: 'yellow', height: 20, width: '100%' }} />
             <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} />
           </SquircleView>
-        </Animated.View>
+        </Animated.View> */}
         {/* End Reanimated Testing */}
 
 
@@ -247,7 +247,7 @@ export default function App() {
           >
             <Text>View</Text>
             <View style={{ backgroundColor: 'yellow', height: 20, width: '100%' }} />
-            <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} />
+            {/* <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} /> */}
           </View>
         </View>
       </ScrollView>
