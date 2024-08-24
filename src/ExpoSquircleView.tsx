@@ -138,7 +138,7 @@ const useSquircleProps = (
       backgroundColor:
         backgroundColor || style?.backgroundColor || "transparent",
       borderColor: borderColor || style?.borderColor || "transparent",
-      cornerSmoothing: cornerSmoothing || 100,
+      cornerSmoothing: cornerSmoothing !== undefined ? cornerSmoothing : 100,
       preserveSmoothing: props.preserveSmoothing || false,
       enabledIOSAnimation: props.enabledIOSAnimation || false,
     },
