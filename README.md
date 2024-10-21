@@ -58,20 +58,20 @@ then do `npx pod-install`
   <tr>
     <td><code>borderRadius</code> or <code>style.borderRadius</code></td>
     <td><code>number</code></td>
-    <td>The component's border radius, you can either set it directly or set it from borderRadius like any other view</td>
+    <td>The component's border radius, you can either set it directly or set it from style.borderRadius like any other view</td>
     <td><code>0</code></td>
   </tr>
    <tr>
     <td><code>backgroundColor</code> or <code>style.backgroundColor</code></td>
     <td><code>ColorValue</code></td>
     <td>The background color of the component, you can either set it directly or set it from style.backgroundColor like any other view</td>
-    <td><code>transperent</code></td>
+    <td><code>transparent</code></td>
   </tr>
    <tr>
     <td><code>borderColor</code> or <code>style.borderColor</code></td>
     <td><code>ColorValue</code></td>
     <td>Since borders has to match the squircle, you can either set it directly or set it from style.borderColor like any other view</td>
-    <td><code>transperent</code></td>
+    <td><code>transparent</code></td>
   </tr>
    <tr>
     <td><code>borderWidth</code> or <code>style.borderWidth</code></td>
@@ -82,7 +82,7 @@ then do `npx pod-install`
    <tr>
     <td><code>ignoreBorderWidthFromPadding</code></td>
     <td><code>boolean<ViewStyle></code></td>
-    <td>We introduced a breaking change in 0.6.0, if you want your styles to work the same as pre 0.6, enable this. when value is `false` the style will match react-native View behavior, when `true` it will ignore border width from affecting the padding of the content</td>
+    <td>We introduced a breaking change in 0.6.0, if you want your styles to work the same as pre 0.6, enable this. when value is <code>false</code> the style will match react-native View behavior, when <code>true</code> it will ignore border width from affecting the padding of the content</td>
     <td><code>false</code></td>
   </tr>
   <tr>
