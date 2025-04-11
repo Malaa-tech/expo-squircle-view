@@ -9,7 +9,6 @@ import { calculateSquirclePadding } from '.';
 
 export function SquircleView(props: ViewProps & SquircleViewProps) {
   const [svgPath, setSvgPath] = React.useState('');
-  const [borderPath, setBorderPath] = React.useState('');
   const [layout, setLayout] = React.useState({
     width: typeof props.style === 'object' && props.style !== null && 'width' in props.style ? props.style.width : undefined,
     height: typeof props.style === 'object' && props.style !== null && 'height' in props.style ? props.style.height : undefined
@@ -74,15 +73,6 @@ export function SquircleView(props: ViewProps & SquircleViewProps) {
       preserveSmoothing: props.preserveSmoothing ?? false
     });
     setSvgPath(path);
-
-    const border = getSvgPath({
-      width: layout.width ? Number(layout.width) - borderWidth : 0,
-      height: layout.height ? Number(layout.height) - borderWidth : 0,
-      cornerRadius: cornerRadius,
-      cornerSmoothing: getCornerSmoothing(),
-      preserveSmoothing: props.preserveSmoothing ?? false
-    });
-    setBorderPath(border);
   }, [
     layout.width,
     layout.height,
@@ -116,21 +106,12 @@ export function SquircleView(props: ViewProps & SquircleViewProps) {
           style={{
             transform: `translateX(${borderWidth / 2}px) translateY(${borderWidth / 2}px)`
           }}
-          fill={getBackgroundColor()}
-        />
-      </svg>
-      {props.children}
-      <svg style={{ position: 'absolute', width: '100%', height: '100%' }}>
-        <path
-          d={borderPath}
-          style={{
-            transform: `translateX(${borderWidth / 2}px) translateY(${borderWidth / 2}px)`
-          }}
-          fill="transparent"
+          fill={getBackgroundColor() || 'transparent'}
           stroke={getBorderColor()}
           strokeWidth={borderWidth}
         />
       </svg>
+      {props.children}
     </View>
   );
 }
