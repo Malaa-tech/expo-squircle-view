@@ -27,19 +27,6 @@ export const NativeView = ({
     y: 0
   });
 
-  useLayoutEffect(() => {
-    if (wrapperRef?.current) {
-      const element = wrapperRef.current as unknown as HTMLElement;
-      console.log({
-        width: element.getBoundingClientRect().width,
-        height: element.getBoundingClientRect().height,
-        x: element.getBoundingClientRect().x,
-        y: element.getBoundingClientRect().y
-      })
-    }
-  }, [wrapperRef.current]);
-
-
   const svgPath = getSvgPath({
     width: layout.width - squircleBorderWidth,
     height: layout.height - squircleBorderWidth,
