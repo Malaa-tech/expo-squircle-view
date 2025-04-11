@@ -5,120 +5,109 @@ import { getSvgPath } from 'figma-squircle';
 import { TouchableOpacity, View, ViewProps } from 'react-native';
 import { calculateSquirclePadding } from '.';
 
-
-
-export function SquircleView(props: ViewProps & SquircleViewProps) {
+// Custom hook to manage squircle rendering
+function useSquircle(props: SquircleViewProps | SquircleButtonProps) {
   const [svgPath, setSvgPath] = React.useState('');
-  const [layout, setLayout] = React.useState({
-    width: typeof props.style === 'object' && props.style !== null && 'width' in props.style ? props.style.width : undefined,
-    height: typeof props.style === 'object' && props.style !== null && 'height' in props.style ? props.style.height : undefined
-  });
+  const [layout, setLayout] = React.useState({ width: 0, height: 0 });
 
+  // Extract style properties
+  const style = StyleSheet.flatten(props.style || {});
+  const borderWidth = typeof style.borderWidth === 'number' ? style.borderWidth : 0;
+  const borderRadius = typeof style.borderRadius === 'number' ? style.borderRadius : 0;
+  const backgroundColor = props.backgroundColor || style.backgroundColor || 'transparent';
+  const borderColor = props.borderColor || style.borderColor;
+  const cornerSmoothing = ((props.cornerSmoothing ?? 100) / 100);
 
+  // Calculate padding
+  const calculatedPadding = calculateSquirclePadding(style, borderWidth);
+
+  // Handle layout changes
   const onLayout = React.useCallback((event) => {
     const { width, height } = event.nativeEvent.layout;
     setLayout({ width, height });
   }, []);
 
-  const getBorderWidth = (): number => {
-    if (typeof props.style === 'object' && props.style !== null && 'borderWidth' in props.style) {
-      return typeof props.style.borderWidth === 'number' ? props.style.borderWidth : 0;
+  // Update the SVG path when dimensions or style properties change
+  React.useEffect(() => {
+    if (layout.width && layout.height) {
+      const path = getSvgPath({
+        width: layout.width - borderWidth,
+        height: layout.height - borderWidth,
+        cornerRadius: borderRadius,
+        cornerSmoothing: cornerSmoothing,
+        preserveSmoothing: props.preserveSmoothing ?? false
+      });
+      setSvgPath(path);
     }
-    return 0;
-  };
-
-  const getBorderRadius = (): number => {
-    if (typeof props.style === 'object' && props.style !== null && 'borderRadius' in props.style) {
-      const radius = props.style.borderRadius;
-      return typeof radius === 'number' ? radius : 0;
-    }
-    return 0;
-  };
-
-  const getBackgroundColor = (): string | undefined => {
-    if (typeof props.style === 'object' && props.style !== null && 'backgroundColor' in props.style) {
-      const color = props.style.backgroundColor;
-      return typeof color === 'string' ? color : undefined;
-    }
-    return undefined;
-  };
-
-  const getBorderColor = (): string | undefined => {
-    if (typeof props.style === 'object' && props.style !== null && 'borderColor' in props.style) {
-      const color = props.style.borderColor;
-      return typeof color === 'string' ? color : undefined;
-    }
-    return undefined;
-  };
-
-  const getCornerSmoothing = (): number => {
-    return (props.cornerSmoothing ?? 100) / 100;
-  };
-
-  const calculatedPadding = calculateSquirclePadding(
-    typeof props.style === 'object' ? StyleSheet.flatten(props.style) : undefined,
-    getBorderWidth()
-  );
-
-
-  React.useLayoutEffect(() => {
-    const borderWidth = getBorderWidth();
-    const cornerRadius = getBorderRadius();
-
-    const path = getSvgPath({
-      width: layout.width ? Number(layout.width) - borderWidth : 0,
-      height: layout.height ? Number(layout.height) - borderWidth : 0,
-      cornerRadius: cornerRadius,
-      cornerSmoothing: getCornerSmoothing(),
-      preserveSmoothing: props.preserveSmoothing ?? false
-    });
-    setSvgPath(path);
   }, [
     layout.width,
     layout.height,
-    props.style,
-    props.cornerSmoothing,
+    borderRadius,
+    borderWidth,
+    cornerSmoothing,
     props.preserveSmoothing
   ]);
 
-  const borderWidth = getBorderWidth();
-  const styledProps = { ...props };
+  // Create clean props without squircle-specific props
+  const cleanProps = { ...props };
+  delete cleanProps.style;
+  delete cleanProps.cornerSmoothing;
+  delete cleanProps.preserveSmoothing;
+  delete cleanProps.backgroundColor;
+  delete cleanProps.borderColor;
+  delete cleanProps.ignoreBorderWidthFromPadding;
 
-  if (typeof styledProps.style === 'object' && styledProps.style !== null) {
-    styledProps.style = StyleSheet.flatten([
-      props.style,
-      {
-        backgroundColor: undefined,
-        borderRadius: undefined,
-        borderColor: undefined,
-        borderWidth: undefined,
-        overflow: 'hidden',
-        ...(props.ignoreBorderWidthFromPadding === true ? undefined : calculatedPadding)
-      }
-    ]);
-  }
+  // Prepare style without squircle-specific properties
+  const cleanStyle = {
+    ...style,
+    backgroundColor: undefined,
+    borderRadius: undefined,
+    borderColor: undefined,
+    borderWidth: undefined,
+    overflow: 'hidden' as const,
+    ...(props.ignoreBorderWidthFromPadding ? undefined : calculatedPadding)
+  };
+
+  // Create the path element
+  const pathElement = (
+    <svg style={{ position: 'absolute', width: '100%', height: '100%' }}>
+      <path
+        d={svgPath}
+        style={{
+          transform: `translateX(${borderWidth / 2}px) translateY(${borderWidth / 2}px)`
+        }}
+        fill={typeof backgroundColor === 'string' ? backgroundColor : 'transparent'}
+        stroke={typeof borderColor === 'string' ? borderColor : undefined}
+        strokeWidth={borderWidth}
+      />
+    </svg>
+  );
+
+  return {
+    onLayout,
+    cleanProps,
+    cleanStyle,
+    pathElement
+  };
+}
+
+export function SquircleView(props: ViewProps & SquircleViewProps) {
+  const { onLayout, cleanProps, cleanStyle, pathElement } = useSquircle(props);
 
   return (
-    <View onLayout={onLayout} {...styledProps}>
-      <svg style={{ position: 'absolute', width: '100%', height: '100%' }}>
-        <path
-          d={svgPath}
-          style={{
-            transform: `translateX(${borderWidth / 2}px) translateY(${borderWidth / 2}px)`
-          }}
-          fill={getBackgroundColor() || 'transparent'}
-          stroke={getBorderColor()}
-          strokeWidth={borderWidth}
-        />
-      </svg>
+    <View onLayout={onLayout} {...cleanProps} style={cleanStyle}>
+      {pathElement}
       {props.children}
     </View>
   );
 }
 
 export function SquircleButton(props: SquircleButtonProps) {
+  const { onLayout, cleanProps, cleanStyle, pathElement } = useSquircle(props);
+
   return (
-    <TouchableOpacity {...props}>
+    <TouchableOpacity onLayout={onLayout} {...cleanProps} style={cleanStyle}>
+      {pathElement}
       {props.children}
     </TouchableOpacity>
   );
