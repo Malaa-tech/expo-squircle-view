@@ -28,7 +28,9 @@
   "author": "Wadah Esam <wadah-wleed@hotmail.com> (https://github.com/WadhahEssam)",
   "license": "MIT",
   "homepage": "https://github.com/Malaa-tech/expo-squircle-view#readme",
-  "dependencies": {},
+  "dependencies": {
+    "figma-squircle": "^1.1.0"
+  },
   "devDependencies": {
     "@types/react": "^18.0.25",
     "expo-module-scripts": "^3.5.2",
