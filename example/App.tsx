@@ -155,7 +155,7 @@ export default function App() {
             }}
           >
             <Text>Squircle</Text>
-            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%' }} />
+            <View style={{ backgroundColor: 'blue', height: 20, width: '100%' }} />
             {/* <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} /> */}
           </SquircleView>
         </View>
@@ -246,7 +246,7 @@ export default function App() {
             }}
           >
             <Text>View</Text>
-            <View style={{ backgroundColor: 'yellow', height: 20, width: '100%' }} />
+            <View style={{ backgroundColor: 'blue', height: 20, width: '100%' }} />
             {/* <View style={{ height: '50%', width: 100, backgroundColor: 'green', position: 'absolute', start: -50, top: 0, opacity: 0.8 }} /> */}
           </View>
         </View>

@@ -14,6 +14,7 @@ import {
   SquircleViewProps,
   ExpoSquircleNativeViewProps,
 } from "./ExpoSquircleView.types";
+import { calculateSquirclePadding } from ".";
 
 const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
   requireNativeViewManager("ExpoSquircleView");
@@ -81,6 +82,8 @@ export const SquircleView = (props: ViewProps & SquircleViewProps) => {
   );
 };
 
+
+
 const useSquircleProps = (
   props: SquircleViewProps | SquircleButtonProps
 ) => {
@@ -95,39 +98,8 @@ const useSquircleProps = (
     ignoreBorderWidthFromPadding,
   } = props;
 
-  const { 
-    padding,
-    paddingVertical, 
-    paddingHorizontal, 
-    paddingBottom,
-    paddingEnd,
-    paddingLeft,
-    paddingRight,
-    paddingStart, 
-    paddingTop 
-  } = style || {};
-
   const calculatedPadding = React.useMemo(() => {
-    const extraPadding = borderWidth || style?.borderWidth || 0;
-
-    const calculatePadding = (_paddingValue: DimensionValue) => {
-      if (typeof _paddingValue === "number") {
-        return _paddingValue + extraPadding;
-      }
-      return _paddingValue;
-    };
-
-    return {
-      padding: padding ? calculatePadding(padding) : extraPadding,
-      paddingVertical: paddingVertical ? calculatePadding(paddingVertical) : undefined,
-      paddingHorizontal: paddingHorizontal ? calculatePadding(paddingHorizontal) : undefined,
-      paddingBottom: paddingBottom ? calculatePadding(paddingBottom) : undefined,
-      paddingEnd: paddingEnd ? calculatePadding(paddingEnd) : undefined,
-      paddingLeft: paddingLeft ? calculatePadding(paddingLeft) : undefined,
-      paddingRight: paddingRight ? calculatePadding(paddingRight) : undefined,
-      paddingStart: paddingStart ? calculatePadding(paddingStart) : undefined,
-      paddingTop: paddingTop ? calculatePadding(paddingTop) : undefined,
-    }
+    return calculateSquirclePadding(style, borderWidth);
   }, [style, borderWidth])
 
   return {
@@ -150,7 +122,7 @@ const useSquircleProps = (
         borderWidth: undefined,
         borderColor: undefined,
         backgroundColor: undefined,
-        ...(ignoreBorderWidthFromPadding === true ? undefined: calculatedPadding)
+        ...(ignoreBorderWidthFromPadding === true ? undefined : calculatedPadding)
       },
     ],
   };
