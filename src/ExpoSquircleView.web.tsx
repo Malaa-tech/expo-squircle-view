@@ -16,10 +16,10 @@ function useSquircle(props: SquircleViewProps | SquircleButtonProps, wrapperRef:
   const backgroundColor = props.backgroundColor || style.backgroundColor || 'transparent';
   const borderColor = props.borderColor || style.borderColor;
   const cornerSmoothing = ((props.cornerSmoothing ?? 100) / 100);
+  const hasOverflow = style.overflow === 'hidden';
 
   // Calculate padding
   const calculatedPadding = calculateSquirclePadding(style, borderWidth);
-
 
   React.useLayoutEffect(() => {
     if (wrapperRef?.current) {
@@ -38,7 +38,7 @@ function useSquircle(props: SquircleViewProps | SquircleButtonProps, wrapperRef:
         setSvgPath(path);
       }
     }
-  }, [wrapperRef, props.style, borderWidth, borderRadius]);
+  }, [wrapperRef, props.style, borderWidth, borderRadius, cornerSmoothing, props.preserveSmoothing]);
 
   // Create clean props without squircle-specific props
   const cleanProps = { ...props };
@@ -53,16 +53,39 @@ function useSquircle(props: SquircleViewProps | SquircleButtonProps, wrapperRef:
   const cleanStyle = {
     ...style,
     backgroundColor: undefined,
-    borderRadius: undefined,
     borderColor: undefined,
     borderWidth: undefined,
-    overflow: 'hidden' as const,
+    borderRadius: undefined,
+    overflow: 'visible' as const, // Force visible on outer container
     ...(props.ignoreBorderWidthFromPadding ? undefined : calculatedPadding)
   };
 
+  // Create style for children container
+  const childrenContainerStyle = hasOverflow ? {
+    position: 'absolute' as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden' as const,
+    borderRadius, // Use the same border radius for clipping
+    // Copy key layout styles from the parent to ensure layout is preserved
+    display: 'flex' as const,
+    flexDirection: style.flexDirection,
+    justifyContent: style.justifyContent,
+    alignItems: style.alignItems,
+    flexWrap: style.flexWrap,
+    ...(props.ignoreBorderWidthFromPadding ? undefined : calculatedPadding)
+  } : undefined;
+
   // Create the path element
   const pathElement = (
-    <svg style={{ position: 'absolute', width: '100%', height: '100%' }}>
+    <svg style={{
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none', // Make sure SVG doesn't block interactions
+    }}>
       <path
         d={svgPath}
         style={{
@@ -78,30 +101,44 @@ function useSquircle(props: SquircleViewProps | SquircleButtonProps, wrapperRef:
   return {
     cleanProps,
     cleanStyle,
-    pathElement
+    pathElement,
+    childrenContainerStyle,
+    hasOverflow
   };
 }
 
 export function SquircleView(props: ViewProps & SquircleViewProps) {
   const wrapperRef = React.useRef<View>(null);
-  const { cleanProps, cleanStyle, pathElement } = useSquircle(props, wrapperRef);
+  const { cleanProps, cleanStyle, pathElement, childrenContainerStyle, hasOverflow } = useSquircle(props, wrapperRef);
 
   return (
     <View ref={wrapperRef} {...cleanProps} style={cleanStyle}>
       {pathElement}
-      {props.children}
+      {hasOverflow ? (
+        <View style={childrenContainerStyle}>
+          {props.children}
+        </View>
+      ) : (
+        props.children
+      )}
     </View>
   );
 }
 
 export function SquircleButton(props: SquircleButtonProps) {
   const wrapperRef = React.useRef<TouchableOpacity>(null);
-  const { cleanProps, cleanStyle, pathElement } = useSquircle(props, wrapperRef);
+  const { cleanProps, cleanStyle, pathElement, childrenContainerStyle, hasOverflow } = useSquircle(props, wrapperRef);
 
   return (
-    <TouchableOpacity {...cleanProps} style={cleanStyle}>
+    <TouchableOpacity ref={wrapperRef} {...cleanProps} style={cleanStyle}>
       {pathElement}
-      {props.children}
+      {hasOverflow ? (
+        <View style={childrenContainerStyle}>
+          {props.children}
+        </View>
+      ) : (
+        props.children
+      )}
     </TouchableOpacity>
   );
 }
