@@ -1,4 +1,3 @@
-import { requireNativeViewManager } from "expo-modules-core";
 import * as React from "react";
 import {
   View,
@@ -6,18 +5,16 @@ import {
   TouchableOpacity,
   processColor,
   ViewProps,
-  DimensionValue,
+  Platform,
 } from "react-native";
 
 import {
   SquircleButtonProps,
   SquircleViewProps,
-  ExpoSquircleNativeViewProps,
 } from "./ExpoSquircleView.types";
 import { calculateSquirclePadding } from ".";
+import { NativeView } from "./NativeWrapper";
 
-const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
-  requireNativeViewManager("ExpoSquircleView");
 
 const ExpoSquircleViewNativeWrapper = (
   props: React.PropsWithChildren<SquircleViewProps | SquircleButtonProps>
@@ -34,8 +31,8 @@ const ExpoSquircleViewNativeWrapper = (
 
   return (
     <NativeView
-      squircleBackgroundColor={processColor(backgroundColor)}
-      squircleBorderColor={processColor(borderColor)}
+      squircleBackgroundColor={Platform.OS === 'web' ? backgroundColor : processColor(backgroundColor)}
+      squircleBorderColor={Platform.OS === 'web' ? borderColor : processColor(borderColor)}
       squircleBorderWidth={borderWidth}
       borderRadius={borderRadius}
       cornerSmoothing={cornerSmoothing}
@@ -115,9 +112,9 @@ const useSquircleProps = (
       enabledIOSAnimation: props.enabledIOSAnimation || false,
     },
     wrapperStyle: [
-      styles.container,
-      style,
       {
+        ...styles.container,
+        ...style,
         // remove styles from wrapper
         borderWidth: undefined,
         borderColor: undefined,
