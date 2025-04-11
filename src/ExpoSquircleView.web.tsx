@@ -6,9 +6,8 @@ import { TouchableOpacity, View, ViewProps } from 'react-native';
 import { calculateSquirclePadding } from '.';
 
 // Custom hook to manage squircle rendering
-function useSquircle(props: SquircleViewProps | SquircleButtonProps) {
+function useSquircle(props: SquircleViewProps | SquircleButtonProps, wrapperRef: React.RefObject<View | TouchableOpacity>) {
   const [svgPath, setSvgPath] = React.useState('');
-  const [layout, setLayout] = React.useState({ width: 0, height: 0 });
 
   // Extract style properties
   const style = StyleSheet.flatten(props.style || {});
@@ -21,32 +20,25 @@ function useSquircle(props: SquircleViewProps | SquircleButtonProps) {
   // Calculate padding
   const calculatedPadding = calculateSquirclePadding(style, borderWidth);
 
-  // Handle layout changes
-  const onLayout = React.useCallback((event) => {
-    const { width, height } = event.nativeEvent.layout;
-    setLayout({ width, height });
-  }, []);
 
-  // Update the SVG path when dimensions or style properties change
-  React.useEffect(() => {
-    if (layout.width && layout.height) {
-      const path = getSvgPath({
-        width: layout.width - borderWidth,
-        height: layout.height - borderWidth,
-        cornerRadius: borderRadius,
-        cornerSmoothing: cornerSmoothing,
-        preserveSmoothing: props.preserveSmoothing ?? false
-      });
-      setSvgPath(path);
+  React.useLayoutEffect(() => {
+    if (wrapperRef?.current) {
+      // Type assertion to tell TypeScript this is a DOM element
+      const element = wrapperRef.current as unknown as HTMLElement;
+      const { width, height } = element.getBoundingClientRect();
+
+      if (width && height) {
+        const path = getSvgPath({
+          width: width - borderWidth,
+          height: height - borderWidth,
+          cornerRadius: borderRadius,
+          cornerSmoothing: cornerSmoothing,
+          preserveSmoothing: props.preserveSmoothing ?? false
+        });
+        setSvgPath(path);
+      }
     }
-  }, [
-    layout.width,
-    layout.height,
-    borderRadius,
-    borderWidth,
-    cornerSmoothing,
-    props.preserveSmoothing
-  ]);
+  }, [wrapperRef, props.style, borderWidth, borderRadius]);
 
   // Create clean props without squircle-specific props
   const cleanProps = { ...props };
@@ -84,7 +76,6 @@ function useSquircle(props: SquircleViewProps | SquircleButtonProps) {
   );
 
   return {
-    onLayout,
     cleanProps,
     cleanStyle,
     pathElement
@@ -92,10 +83,11 @@ function useSquircle(props: SquircleViewProps | SquircleButtonProps) {
 }
 
 export function SquircleView(props: ViewProps & SquircleViewProps) {
-  const { onLayout, cleanProps, cleanStyle, pathElement } = useSquircle(props);
+  const wrapperRef = React.useRef<View>(null);
+  const { cleanProps, cleanStyle, pathElement } = useSquircle(props, wrapperRef);
 
   return (
-    <View onLayout={onLayout} {...cleanProps} style={cleanStyle}>
+    <View ref={wrapperRef} {...cleanProps} style={cleanStyle}>
       {pathElement}
       {props.children}
     </View>
@@ -103,10 +95,11 @@ export function SquircleView(props: ViewProps & SquircleViewProps) {
 }
 
 export function SquircleButton(props: SquircleButtonProps) {
-  const { onLayout, cleanProps, cleanStyle, pathElement } = useSquircle(props);
+  const wrapperRef = React.useRef<TouchableOpacity>(null);
+  const { cleanProps, cleanStyle, pathElement } = useSquircle(props, wrapperRef);
 
   return (
-    <TouchableOpacity onLayout={onLayout} {...cleanProps} style={cleanStyle}>
+    <TouchableOpacity {...cleanProps} style={cleanStyle}>
       {pathElement}
       {props.children}
     </TouchableOpacity>
