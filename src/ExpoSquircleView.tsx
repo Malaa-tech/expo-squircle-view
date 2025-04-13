@@ -1,4 +1,3 @@
-import { requireNativeViewManager } from "expo-modules-core";
 import * as React from "react";
 import {
   View,
@@ -6,17 +5,16 @@ import {
   TouchableOpacity,
   processColor,
   ViewProps,
+  Platform,
   DimensionValue,
 } from "react-native";
 
 import {
   SquircleButtonProps,
   SquircleViewProps,
-  ExpoSquircleNativeViewProps,
 } from "./ExpoSquircleView.types";
+import { NativeView } from "./NativeWrapper";
 
-const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
-  requireNativeViewManager("ExpoSquircleView");
 
 const ExpoSquircleViewNativeWrapper = (
   props: React.PropsWithChildren<SquircleViewProps | SquircleButtonProps>
@@ -33,8 +31,8 @@ const ExpoSquircleViewNativeWrapper = (
 
   return (
     <NativeView
-      squircleBackgroundColor={processColor(backgroundColor)}
-      squircleBorderColor={processColor(borderColor)}
+      squircleBackgroundColor={Platform.OS === 'web' ? backgroundColor : processColor(backgroundColor)}
+      squircleBorderColor={Platform.OS === 'web' ? borderColor : processColor(borderColor)}
       squircleBorderWidth={borderWidth}
       borderRadius={borderRadius}
       cornerSmoothing={cornerSmoothing}
@@ -81,6 +79,8 @@ export const SquircleView = (props: ViewProps & SquircleViewProps) => {
   );
 };
 
+
+
 const useSquircleProps = (
   props: SquircleViewProps | SquircleButtonProps
 ) => {
@@ -95,39 +95,8 @@ const useSquircleProps = (
     ignoreBorderWidthFromPadding,
   } = props;
 
-  const { 
-    padding,
-    paddingVertical, 
-    paddingHorizontal, 
-    paddingBottom,
-    paddingEnd,
-    paddingLeft,
-    paddingRight,
-    paddingStart, 
-    paddingTop 
-  } = style || {};
-
   const calculatedPadding = React.useMemo(() => {
-    const extraPadding = borderWidth || style?.borderWidth || 0;
-
-    const calculatePadding = (_paddingValue: DimensionValue) => {
-      if (typeof _paddingValue === "number") {
-        return _paddingValue + extraPadding;
-      }
-      return _paddingValue;
-    };
-
-    return {
-      padding: padding ? calculatePadding(padding) : extraPadding,
-      paddingVertical: paddingVertical ? calculatePadding(paddingVertical) : undefined,
-      paddingHorizontal: paddingHorizontal ? calculatePadding(paddingHorizontal) : undefined,
-      paddingBottom: paddingBottom ? calculatePadding(paddingBottom) : undefined,
-      paddingEnd: paddingEnd ? calculatePadding(paddingEnd) : undefined,
-      paddingLeft: paddingLeft ? calculatePadding(paddingLeft) : undefined,
-      paddingRight: paddingRight ? calculatePadding(paddingRight) : undefined,
-      paddingStart: paddingStart ? calculatePadding(paddingStart) : undefined,
-      paddingTop: paddingTop ? calculatePadding(paddingTop) : undefined,
-    }
+    return calculateSquirclePadding(style, borderWidth);
   }, [style, borderWidth])
 
   return {
@@ -143,16 +112,53 @@ const useSquircleProps = (
       enabledIOSAnimation: props.enabledIOSAnimation || false,
     },
     wrapperStyle: [
-      styles.container,
-      style,
       {
+        ...styles.container,
+        ...style,
         // remove styles from wrapper
         borderWidth: undefined,
         borderColor: undefined,
         backgroundColor: undefined,
-        ...(ignoreBorderWidthFromPadding === true ? undefined: calculatedPadding)
+        ...(ignoreBorderWidthFromPadding === true ? undefined : calculatedPadding)
       },
     ],
+  };
+};
+
+export const calculateSquirclePadding = (
+  style?: {
+    padding?: DimensionValue;
+    paddingVertical?: DimensionValue;
+    paddingHorizontal?: DimensionValue;
+    paddingBottom?: DimensionValue;
+    paddingEnd?: DimensionValue;
+    paddingLeft?: DimensionValue;
+    paddingRight?: DimensionValue;
+    paddingStart?: DimensionValue;
+    paddingTop?: DimensionValue;
+    borderWidth?: number;
+  },
+  borderWidth?: number
+) => {
+  const extraPadding = borderWidth || style?.borderWidth || 0;
+
+  const calculatePadding = (_paddingValue: DimensionValue) => {
+    if (typeof _paddingValue === "number") {
+      return _paddingValue + extraPadding;
+    }
+    return _paddingValue;
+  };
+
+  return {
+    padding: style?.padding ? calculatePadding(style.padding) : extraPadding,
+    paddingVertical: style?.paddingVertical ? calculatePadding(style.paddingVertical) : undefined,
+    paddingHorizontal: style?.paddingHorizontal ? calculatePadding(style.paddingHorizontal) : undefined,
+    paddingBottom: style?.paddingBottom ? calculatePadding(style.paddingBottom) : undefined,
+    paddingEnd: style?.paddingEnd ? calculatePadding(style.paddingEnd) : undefined,
+    paddingLeft: style?.paddingLeft ? calculatePadding(style.paddingLeft) : undefined,
+    paddingRight: style?.paddingRight ? calculatePadding(style.paddingRight) : undefined,
+    paddingStart: style?.paddingStart ? calculatePadding(style.paddingStart) : undefined,
+    paddingTop: style?.paddingTop ? calculatePadding(style.paddingTop) : undefined,
   };
 };
 

@@ -16,8 +16,8 @@ type SquircleProps = {
 };
 
 export type ExpoSquircleNativeViewProps = {
-  squircleBackgroundColor?: ReturnType<typeof processColor>;
-  squircleBorderColor?: ReturnType<typeof processColor>;
+  squircleBackgroundColor?: ReturnType<typeof processColor> | ColorValue;
+  squircleBorderColor?: ReturnType<typeof processColor> | ColorValue;
   squircleBorderWidth?: number;
 } & ViewProps &
   SquircleProps;
