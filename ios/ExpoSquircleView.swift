@@ -19,6 +19,7 @@ class ExpoSquircleView: ExpoView {
     }
     
     private func setupSquircleLayer() {
+        squircleLayer.zPosition = -1
         layer.addSublayer(squircleLayer)
     }
     

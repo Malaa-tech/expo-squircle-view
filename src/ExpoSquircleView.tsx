@@ -1,11 +1,8 @@
 import { requireNativeViewManager } from "expo-modules-core";
 import * as React from "react";
 import {
-  View,
   StyleSheet,
   TouchableOpacity,
-  processColor,
-  ViewProps,
   DimensionValue,
 } from "react-native";
 
@@ -18,66 +15,38 @@ import {
 const NativeView: React.ComponentType<ExpoSquircleNativeViewProps> =
   requireNativeViewManager("ExpoSquircleView");
 
-const ExpoSquircleViewNativeWrapper = (
-  props: React.PropsWithChildren<SquircleViewProps | SquircleButtonProps>
-) => {
-  const {
-    cornerSmoothing,
-    backgroundColor,
-    borderRadius,
-    borderColor,
-    borderWidth,
-    preserveSmoothing,
-    enabledIOSAnimation,
-  } = props;
-
-  return (
-    <NativeView
-      squircleBackgroundColor={processColor(backgroundColor)}
-      squircleBorderColor={processColor(borderColor)}
-      squircleBorderWidth={borderWidth}
-      borderRadius={borderRadius}
-      cornerSmoothing={cornerSmoothing}
-      preserveSmoothing={preserveSmoothing}
-      enabledIOSAnimation={enabledIOSAnimation}
-      style={StyleSheet.absoluteFill}
-    />
-  );
-};
-
 export const SquircleButton = (
   props: React.PropsWithChildren<SquircleButtonProps>
 ) => {
   const { children } = props;
-  const { squircleProps, wrapperStyle } = useSquircleProps(props);
+  const { nativeSquircleProps, containerStyle } = useSquircleProps(props);
 
   return (
     <TouchableOpacity
       {...props}
-      style={wrapperStyle}
+      style={containerStyle}
     >
-      <ExpoSquircleViewNativeWrapper
-        {...squircleProps}
+      <NativeView
+        {...nativeSquircleProps}
+        style={StyleSheet.absoluteFill}
       />
       {children}
     </TouchableOpacity>
   );
 };
 
-export const SquircleView = (props: ViewProps & SquircleViewProps) => {
-  const { children } = props;
-  const { squircleProps, wrapperStyle } = useSquircleProps(props);
+export const SquircleView = (props: SquircleViewProps) => {
+  const {
+    backgroundColor: _backgroundColor,
+    borderColor: _borderColor,
+    ignoreBorderWidthFromPadding: _ignoreBorderWidthFromPadding,
+    style: _style,
+    ...restProps
+  } = props;
+  const { nativeSquircleProps, containerStyle } = useSquircleProps(props);
 
   return (
-    <View
-      {...props}
-      style={wrapperStyle}
-    >
-      <ExpoSquircleViewNativeWrapper
-        {...squircleProps}
-      />
-      {children}
-    </View>
+    <NativeView {...restProps} {...nativeSquircleProps} style={containerStyle} />
   );
 };
 
@@ -87,28 +56,22 @@ const useSquircleProps = (
   const style = props.style ? StyleSheet.flatten(props.style) : undefined;
 
   const {
-    cornerSmoothing,
-    borderRadius,
-    borderWidth,
-    backgroundColor,
-    borderColor,
-    ignoreBorderWidthFromPadding,
-  } = props;
-
-  const { 
     padding,
-    paddingVertical, 
-    paddingHorizontal, 
+    paddingVertical,
+    paddingHorizontal,
     paddingBottom,
     paddingEnd,
     paddingLeft,
     paddingRight,
-    paddingStart, 
-    paddingTop 
+    paddingStart,
+    paddingTop
   } = style || {};
 
   const calculatedPadding = React.useMemo(() => {
-    const extraPadding = borderWidth || style?.borderWidth || 0;
+    if (props.ignoreBorderWidthFromPadding === true) {
+      return undefined;
+    }
+    const extraPadding = props.borderWidth || style?.borderWidth || 0;
 
     const calculatePadding = (_paddingValue: DimensionValue) => {
       if (typeof _paddingValue === "number") {
@@ -128,21 +91,23 @@ const useSquircleProps = (
       paddingStart: paddingStart ? calculatePadding(paddingStart) : undefined,
       paddingTop: paddingTop ? calculatePadding(paddingTop) : undefined,
     }
-  }, [style, borderWidth])
+  }, [style, props.borderWidth])
 
   return {
-    squircleProps: {
-      ...props,
-      borderRadius: borderRadius || style?.borderRadius || 0,
-      borderWidth: borderWidth || style?.borderWidth || 0,
-      backgroundColor:
-        backgroundColor || style?.backgroundColor || "transparent",
-      borderColor: borderColor || style?.borderColor || "transparent",
-      cornerSmoothing: cornerSmoothing !== undefined ? cornerSmoothing : 100,
-      preserveSmoothing: props.preserveSmoothing || false,
-      enabledIOSAnimation: props.enabledIOSAnimation || false,
+    nativeSquircleProps: {
+      squircleBackgroundColor: (
+        props.backgroundColor || style?.backgroundColor || "transparent"
+      ),
+      squircleBorderColor: (
+        props.borderColor || style?.borderColor || "transparent"
+      ),
+      squircleBorderWidth: props.borderWidth || style?.borderWidth || 0,
+      borderRadius: props.borderRadius || style?.borderRadius,
+      cornerSmoothing: props.cornerSmoothing !== undefined ? props.cornerSmoothing : 100,
+      preserveSmoothing: props.preserveSmoothing,
+      enabledIOSAnimation: props.enabledIOSAnimation,
     },
-    wrapperStyle: [
+    containerStyle: [
       styles.container,
       style,
       {
@@ -150,7 +115,7 @@ const useSquircleProps = (
         borderWidth: undefined,
         borderColor: undefined,
         backgroundColor: undefined,
-        ...(ignoreBorderWidthFromPadding === true ? undefined: calculatedPadding)
+        ...calculatedPadding,
       },
     ],
   };
